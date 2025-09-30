@@ -66,3 +66,23 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem 'devise'
+
+gem 'pry-rails'
+
+gem 'active_hash'
+
+gem 'mini_magick'
+gem 'image_processing', '~> 1.2'
+
+
+gem 'payjp'
+
+gem 'gon'
+
+group :production do
+  gem 'pg'
+end
+
+gem 'ransack'
