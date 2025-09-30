@@ -1,0 +1,12 @@
+const price = () => {
+  const itemprice = document.getElementById("item-price");
+  itemprice.addEventListener('input',function() {
+    const inputvalue = itemprice.value;
+    const addtaxprice = document.getElementById("add-tax-price");
+    const profit = document.getElementById('profit');
+    addtaxprice.innerHTML = Math.floor(inputvalue * 0.1);
+    profit.innerHTML = inputvalue - addtaxprice.innerHTML;
+  });
+};
+window.addEventListener("turbo:load", price);
+window.addEventListener("turbo:render", price);
