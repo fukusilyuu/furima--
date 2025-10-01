@@ -6,13 +6,12 @@ Rails.application.routes.draw do
   resources :reports, only: [:new,:create]
   resources :replies, only: [:create]
   resources :items do
-    resources :comments do
-      resources :replies, only: [:create] do 
     resources :orders, only: [:index, :create] 
+  end
+    resources :comments do
+      resources :replies, only: [:create]
     collection do
       get 'search'
-       end
-      end
     end
   end
 end
