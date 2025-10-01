@@ -1,9 +1,13 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :set_order, only: [:index,:create]
   require 'payjp'
   def index
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order = OrderAddress.new
+    unless @item.order.nil?
+      redirect_to root_path
+    end
   end
 
   def create
