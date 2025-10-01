@@ -134,16 +134,19 @@
         <div class='item-img-content'>
           <%= image_tag item.image, class: "item-img" %>
 
-          <%# 商品が売れていればsold outを表示しましょう %>
+          <% if item.order != nil %>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
-          <%# //商品が売れていればsold outを表示しましょう %>
+          <% end %>
 
         </div>
         <div class='item-info'>
           <h3 class='item-name'>
             <%= item.name %>
+             <% if current_user.id == item.user.id%>
+              <div class="name-border"></div>
+             <%end%>
           </h3>
           <div class='item-price'>
             <span><%= item.price %>円<br><%= item.payment.name %></span>

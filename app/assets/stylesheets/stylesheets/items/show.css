@@ -25,6 +25,12 @@
   font-size: 25px;
 }
 
+.name-border {
+  width: 50px;
+  border-bottom: 5px solid #dedede;
+  margin-bottom: 15px;
+}
+
 .item-box-img {
   height: 50vh;
   width: 60vw;
