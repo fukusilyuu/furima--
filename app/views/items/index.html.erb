@@ -144,6 +144,9 @@
         <div class='item-info'>
           <h3 class='item-name'>
             <%= item.name %>
+             <% if current_user.id == item.user.id%>
+              <div class="name-border"></div>
+             <%end%>
           </h3>
           <div class='item-price'>
             <span><%= item.price %>円<br><%= item.payment.name %></span>
