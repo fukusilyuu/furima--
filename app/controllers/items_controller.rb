@@ -1,13 +1,15 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show,:edit,:update,:destroy]
-  before_action :set_edit_destroy, only: [:edit,:destroy]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :set_item, only: %i[show edit update destroy]
+  before_action :set_edit_destroy, only: %i[edit destroy]
   def index
     @items = Item.includes(:user).order('created_at DESC')
   end
+
   def new
     @item = Item.new
   end
+
   def create
     @item = Item.new(item_params)
     if @item.save
@@ -18,12 +20,16 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @comment = Comment.new
+    @reply = Reply.new
+    @comments = @item.comments.includes(:user)
+    @replies = @comment.replies.includes(:user)
   end
 
   def edit
-    unless @item.order.nil?
-      redirect_to root_path
-    end
+    return if @item.order.nil?
+
+    redirect_to root_path
   end
 
   def update
@@ -35,13 +41,16 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if @item.destroy
-      redirect_to root_path
-    end
+    return unless @item.destroy
+
+    redirect_to root_path
   end
+
   private
+
   def item_params
-    params.require(:item).permit(:name, :image, :price, :explanation, :genre_id, :quality_id, :payment_id, :prefecture_id, :days_id).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :image, :price, :explanation, :genre_id, :quality_id, :payment_id,
+                                 :prefecture_id, :days_id).merge(user_id: current_user.id)
   end
 
   def set_item
@@ -49,8 +58,8 @@ class ItemsController < ApplicationController
   end
 
   def set_edit_destroy
-    unless current_user.id == @item.user.id
-      redirect_to root_path
-    end
+    return if current_user.id == @item.user.id
+
+    redirect_to root_path
   end
 end

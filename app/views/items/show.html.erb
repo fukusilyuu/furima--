@@ -4,40 +4,43 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= @item.name %>
-      <% if current_user.id == @item.user.id%>
-      <div class="name-border"></div>
-      <%end%>
+       <%= @item.name %>
+       <%= l @item.created_at, class:"comment-created-at"%>
     </h2>
-    <div class="item-img-content">
-      <%= image_tag @item.image,class:"item-box-img" %>
+    <div class='item-img-content'>
+      <%= image_tag @item.image, class:"item-box-img" %>
       <% if @item.order != nil %>
       <div class="sold-out">
         <span>Sold Out!!</span>
       </div>
-      <% end %>
+      <%end %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
-        <% @item.price %>
+        <%= @item.price %>円
       </span>
       <span class="item-postage">
-        <%= @item.payment.name %>
+        (税込) 送料込み
       </span>
     </div>
 
   <% if user_signed_in? %>
-   <% if current_user.id == @item.user.id && @item.order.nil? %>
+   <%if current_user.id == @item.user.id && @item.order.nil? %>
     <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
     <%= link_to "削除", item_path(@item), data: {turbo_method: :delete}, class:"item-destroy" %>
 
-   <%else%>
-    <% if @item.order.nil? %>
-    <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
+   <%else %>
+    <% if @item.order.nil?%>
+    <%= link_to "購入画面に進む", item_orders_path(@item) , data: { turbo: false },class:"item-red-btn"%>
     <% end %>
    <%end%>
-   <% end %>
+
+  <% end %>
+
+    
+
+    
 
     <div class="item-explain-box">
       <span><%= @item.explanation %></span>
@@ -72,8 +75,8 @@
     </table>
     <div class="option">
       <div class="favorite-btn">
-        <%= image_tag "images/star.png" ,class:"favorite-star-icon" ,width:"20",height:"20"%>
-        <span>お気に入り 0</span>
+        <%= image_tag "images/star.png" ,class:"favorite-star-icon", id:"star" ,width:"20",height:"20"%>
+        <span id='star-counts'>お気に入り 0</span>
       </div>
       <div class="report-btn">
         <%= image_tag "images/flag.png" ,class:"report-flag-icon" ,width:"20",height:"20"%>
@@ -84,18 +87,60 @@
   <%# /商品の概要 %>
 
   <div class="comment-box">
-    <form>
-      <textarea class="comment-text"></textarea>
+    <%#eac%>
+     <%=form_with(model:[@item,@comment,@reply], url: item_comments_path(@item), local: true) do |f|%>
+      <%=f.text_field :text, class:"comment-text"%>
       <p class="comment-warn">
         相手のことを考え丁寧なコメントを心がけましょう。
         <br>
         不快な言葉遣いなどは利用制限や退会処分となることがあります。
       </p>
       <button type="submit" class="comment-btn">
-        <%= image_tag "images/comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
-        <span>コメントする<span>
+        <%= image_tag "images/comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>   
+          <span>コメントする<span>
       </button>
-    </form>
+      <div class="comment-btn2">
+           <span id="comment-ran" >コメント欄</span>
+      </div>
+      <ul class="comments">
+
+       <% @comments.each do |comment| %>
+        <li class="comment-lists">
+          <li class="comment-report">   
+           <%= comment.user.nickname %>
+           <%= l comment.created_at, class:"comment-created-at"%>
+           <%#tne%>
+           <br>
+           <%= comment.text%>
+          </li>
+       <%end%>
+         <div class="reply">
+          <div class="reply-context">
+            <%= f.text_field :context, class:"reply-text" %>
+            <%= f.submit "送信", class:"reply-submit"%>
+          </div>
+            <% @replies.each do |reply| %>
+           <div class="reply-lists">
+            <div class="reply-list">
+             <%= reply.user.nickname %>
+             <%= l reply.created_at, class:"comment-created-at"%>
+             <span id="ten">:</span>
+             <br>
+             <%=reply.context%>
+           </div>
+          </div>
+          <%end%>
+        </div>
+         <li class="comment-image">
+             <%=image_tag "images/comment.png",class:"c-i",width:"15",height:"20", id:"replies"%>
+            <%=image_tag"images/star.png",id:"star",width:"15",height:"15"%>
+            <span id='star-counts'>0</span>
+           </li>
+          </li>
+        <%end%>
+       <%#i%>
+       </li>
+   </ul>
   </div>
   <div class="links">
     <a href="#" class="change-item-btn">
@@ -105,9 +150,6 @@
       後ろの商品 ＞
     </a>
   </div>
-  <%# 詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
-  <a href="#" class="another-item"><%= "商品のカテゴリー名" %>をもっと見る</a>
-  <%# //詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
+  <a href="#" class="another-item"><%= @item.genre.name %>をもっと見る</a>
 </div>
-
 <%= render "shared/footer" %>
