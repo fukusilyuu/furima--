@@ -1,0 +1,16 @@
+.reply{
+  background-color: #3CCACE;
+  width: 50px;
+}
+
+
+.reply-context{
+  background-color: rgb(53, 132, 202);
+}
+
+.reply-text{
+  width: 30px;
+}
+
+
+.reply-submit{}

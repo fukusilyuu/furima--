@@ -86,3 +86,6 @@ group :production do
 end
 
 gem 'ransack'
+
+gem 'rubocop', require:false
+gem 'rubocop-rails', require:false
