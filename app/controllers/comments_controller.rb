@@ -4,7 +4,6 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to item_path(@comment.id)
     else
-      @item = Item.find(params[:id])
       @item = @comment.item
       @comments = @item.comments
       render 'items/show'
