@@ -3,9 +3,12 @@ Rails.application.routes.draw do
   root 'items#index'
   get 'up' => 'rails/health#show', as: :rails_health_check
 
-  # resources :comments
-  # resources :reports, only: %i[new create]
-  # resources :replies, only: [:create]
+  get 'items/index' => 'items#index'
+  get 'items/:id' => 'items#show', as: 'items'
+
+  resources :comments
+  resources :reports, only: %i[new create]
+  resources :replies, only: [:create]
 
   resources :items do
     resources :orders, only: %i[index create]
@@ -14,5 +17,3 @@ Rails.application.routes.draw do
     end
   end
 end
-
-# resources :reports, only: %i[new create]resources :replies, only: [:create]resources :items do resources :orders, only: %i[index create]

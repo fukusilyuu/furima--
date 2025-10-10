@@ -87,8 +87,7 @@
   <%# /商品の概要 %>
 
   <div class="comment-box">
-    <%#eac%>
-     <%=form_with(model:[@item,@comment,@reply], url: item_comments_path(@item), local: true) do |f|%>
+     <%=form_with model: Comment.new ,url: item_comments_path(@item), local: true do |f|%>
       <%=f.text_field :text, class:"comment-text"%>
       <p class="comment-warn">
         相手のことを考え丁寧なコメントを心がけましょう。
@@ -103,44 +102,41 @@
            <span id="comment-ran" >コメント欄</span>
       </div>
       <ul class="comments">
-
-       <% @comments.each do |comment| %>
+       <%@comments.each do |comment| %>
         <li class="comment-lists">
-          <li class="comment-report">   
+          <li class="comment-list">
            <%= comment.user.nickname %>
            <%= l comment.created_at, class:"comment-created-at"%>
-           <%#tne%>
            <br>
-           <%= comment.text%>
-          </li>
-       <%end%>
-         <div class="reply">
-          <div class="reply-context">
-            <%= f.text_field :context, class:"reply-text" %>
-            <%= f.submit "送信", class:"reply-submit"%>
+           <%= comment.text %>
+         <div class="reply ">
+          <div class='reply-context'>
+           <%=form_with model: @reply, local: true do |f|%>
+            <%=f.text_field :context,class:'reply-text'%>
+            <%=f.submit '送信', class:'reply-submit'%>
           </div>
-            <% @replies.each do |reply| %>
-           <div class="reply-lists">
+          <%@replies.each do |reply|%>
+          <div class="reply-lists">
             <div class="reply-list">
-             <%= reply.user.nickname %>
-             <%= l reply.created_at, class:"comment-created-at"%>
-             <span id="ten">:</span>
-             <br>
-             <%=reply.context%>
-           </div>
+              <%=reply.user.nickname%>
+              <%=reply.context%>
+            </div>
           </div>
-          <%end%>
-        </div>
-         <li class="comment-image">
-             <%=image_tag "images/comment.png",class:"c-i",width:"15",height:"20", id:"replies"%>
-            <%=image_tag"images/star.png",id:"star",width:"15",height:"15"%>
-            <span id='star-counts'>0</span>
-           </li>
-          </li>
+         <%end%>
         <%end%>
-       <%#i%>
-       </li>
+       </div>
+       <li class="comment-image">
+         <%=image_tag "images/comment.png",class:"c-i",width:"15",height:"20", id:"replies"%>
+         <%=image_tag"images/star.png",id:"star",width:"15",height:"15"%>
+         <span id='star-counts'>0</span>
+       </li>    
+          </li>
+          <%end%>
+        <br>
+      <%end%>
+      </li>
    </ul>
+   
   </div>
   <div class="links">
     <a href="#" class="change-item-btn">

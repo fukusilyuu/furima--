@@ -4,7 +4,7 @@ const price = () => {
     const inputvalue = itemprice.value;
     const addtaxprice = document.getElementById("add-tax-price");
     const profit = document.getElementById('profit');
-    addtaxprice.innerHTML = Math.floor(inputvalue * 0.1);
+    addtaxprice.innerHTML = Math.floor(inputvalue * 3);
     profit.innerHTML = inputvalue - addtaxprice.innerHTML;
   });
 };

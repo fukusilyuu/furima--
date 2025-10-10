@@ -1,16 +1,19 @@
-.reply{
-  background-color: #3CCACE;
+.reply {
+  background-color: aliceblue;
+  width: 150px;
+  margin-left: 198px;
+
+}
+
+
+.reply-context {
+}
+
+.reply-text {
+  width: 79px;
+}
+
+
+.reply-submit {
   width: 50px;
 }
-
-
-.reply-context{
-  background-color: rgb(53, 132, 202);
-}
-
-.reply-text{
-  width: 30px;
-}
-
-
-.reply-submit{}

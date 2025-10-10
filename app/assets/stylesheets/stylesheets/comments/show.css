@@ -12,10 +12,8 @@
 }
 
 .comments{
-  background-color:#fff;
   margin: 0px 0 0 15px;
-  display: flex;
-  justify-content: space-between;
+  display: block;
 }
 
 .comment-lists{
@@ -23,14 +21,22 @@
   justify-content: space-between;
 }
 
+
 .comment-list{
-  display: block;
-  justify-content: left;
+  display: flex;
+}
+
+
+.c-t{
+  margin-left: 5px;
 }
 
 .comment-image{
-
-  margin-bottom: 40px;
+  margin-left: 5px;
   border-bottom: 1px solid whitesmoke;
+  display: flex;
 }
 
+.c-i{
+  margin-right: 10px;
+}

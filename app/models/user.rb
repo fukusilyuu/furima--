@@ -12,4 +12,7 @@ class User < ApplicationRecord
     validates :firstname_katakana, :lastname_katakana, format: { with: /\A[ァ-ヶー－]+\z/ }
   end
   has_many :items
+  has_many :replies
+  has_many :comments
+  has_many :orders
 end

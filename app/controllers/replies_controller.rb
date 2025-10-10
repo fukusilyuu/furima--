@@ -3,8 +3,9 @@ class RepliesController < ApplicationController
     @reply = Reply.new(reply_params)
     @comment = @reply.comment
     @replies = @comment.replies
-    @reply.save
-    redirect_to item_path(@reply.comment)
+    @reply.save!
+
+    redirect_to item_path
   end
 
   private
