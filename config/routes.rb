@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   resources :items do
     resources :orders, only: %i[index create]
     resources :comments do
-      resources :replies, only: [:create]
+      resources :replies, only: [:create] do
+        resources :likes, only: %i[create destroy]
+      end
     end
   end
 end

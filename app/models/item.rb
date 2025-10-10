@@ -17,7 +17,7 @@ class Item < ApplicationRecord
     validates :days_id
   end
   belongs_to :user
-  has_many :replies
+  has_many :replies, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one :order
 

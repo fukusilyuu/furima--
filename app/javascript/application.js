@@ -2,4 +2,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "price"
-import "card"import "channels"
+import "card"
+import "channels"
