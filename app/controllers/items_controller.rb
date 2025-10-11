@@ -4,6 +4,7 @@ class ItemsController < ApplicationController
   before_action :set_edit_destroy, only: %i[edit destroy]
   def index
     @items = Item.includes(:user).order('created_at DESC')
+    like = current_user.likes.build(item_id: params[:item_id])
   end
 
   def new

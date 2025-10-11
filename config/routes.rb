@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'items#index'
   get 'up' => 'rails/health#show', as: :rails_health_check
 
-  get 'items/index' => 'items#index'
+  get 'items/:id/likes' => 'likes#create'
   get 'items/:id' => 'items#show', as: 'items'
 
   resources :comments
@@ -12,10 +12,9 @@ Rails.application.routes.draw do
 
   resources :items do
     resources :orders, only: %i[index create]
+    resources :likes, only: %i[create destroy]
     resources :comments do
-      resources :replies, only: [:create] do
-        resources :likes, only: %i[create destroy]
-      end
+      resources :replies, only: [:create]
     end
   end
 end
