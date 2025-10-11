@@ -145,9 +145,9 @@
           <h3 class='item-name'>
             <%= item.name %>
             <% if item.user.followed_by?(current_user) %>
-      <%=link_to "フォロー中", item_relationship_path(item.id), data: { turbo_method: :delete } %>
+      <%=link_to "フォロー中", item_relationship_path(item.id), data: { turbo_method: :delete }, class:'item-relationship' %>
     <% else %>
-      <%=link_to "フォローする", item_relationships_path(item.id),data: { turbo_method: :post } %>
+      <%=link_to "フォローする", item_relationships_path(item.id),data: { turbo_method: :post }, class:'item-relationship'%>
     <% end %>
           </h3>
           <div class='item-price'>
@@ -158,9 +158,9 @@
               <div id="like-btn<%= item.id %>">
                <% if current_user != item %>
                 <% if user_signed_in? && item.liked_by?(current_user)%>
-                  <%=link_to "いいね済", item_likes_path(item.id),  data: { turbo_method: :delete }, class: "tweet_likes" %>
+                  <%=link_to "いいね済", item_likes_path(item.id),  data: { turbo_method: :delete }, class: "item-likes" %>
                 <% else %>
-                  <%=link_to "いいねする", item_like_path(item.id), data: { turbo_method: :create }, class: "tweet_likes" %>
+                  <%=link_to "いいねする", item_like_path(item.id), data: { turbo_method: :create }, class: "item-likes" %>
                 <% end %>
                <%end%>
         </div>
