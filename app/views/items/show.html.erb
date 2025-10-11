@@ -6,11 +6,13 @@
     <h2 class="name">
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
-       <% if @user.followed_by?(current_user) %>
-        <%=link_to "フォロー中", user_relationships_path(@user.id),class: "btn", data: { turbo_method: :delete } %>
-       <% else %>
-        <%=link_to "フォローする", user_relationships_path(@user.id),class: "btn", data: { turbo_method: :post } %>
-       <% end %>
+        <% if current_user != @user %>
+         <% if @item.user.followed_by?(current_user) %>
+           <%=link_to "フォロー中", item_relationship_path(@item.id), data: { turbo_method: :delete } %>
+         <% else %>
+           <%=link_to "フォローする", item_relationships_path(@item.id),data: { turbo_method: :post } %>
+         <% end %>
+        <%end%>
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image, class:"item-box-img" %>
@@ -138,7 +140,7 @@
           <% if user_signed_in? && @item.liked_by?(current_user)%>
            <%=link_to "いいね済", item_likes_path(@item.id),  data: { turbo_method: :delete }, class: "tweet_likes" %>
           <% else %>
-            <%=link_to "いいねする", item_likes_path(@item.id), data: { turbo_method: :post }, class: "tweet_likes" %>
+            <%=link_to "いいねする", item_like_path(@item.id), data: { turbo_method: :create }, class: "tweet_likes" %>
           <% end %>
         </div>
        </li>    

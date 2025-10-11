@@ -145,7 +145,7 @@
           <h3 class='item-name'>
             <%= item.name %>
             <% if item.user.followed_by?(current_user) %>
-      <%=link_to "フォロー中", item_relationships_path(item.id), data: { turbo_method: :delete } %>
+      <%=link_to "フォロー中", item_relationship_path(item.id), data: { turbo_method: :delete } %>
     <% else %>
       <%=link_to "フォローする", item_relationships_path(item.id),data: { turbo_method: :post } %>
     <% end %>
@@ -156,11 +156,13 @@
               <%= image_tag "images/star.png", class:"star-icon", id:"star" %>
               <span class='star-count' id='star-counts'></span>
               <div id="like-btn<%= item.id %>">
-          <% if user_signed_in? && item.liked_by?(current_user)%>
-           <%=link_to "いいね済", item_likes_path(item.id),  data: { turbo_method: :delete }, class: "tweet_likes" %>
-          <% else %>
-            <%=link_to "いいねする", item_likes_path(item.id), data: { turbo_method: :create }, class: "tweet_likes" %>
-          <% end %>
+               <% if current_user != item %>
+                <% if user_signed_in? && item.liked_by?(current_user)%>
+                  <%=link_to "いいね済", item_likes_path(item.id),  data: { turbo_method: :delete }, class: "tweet_likes" %>
+                <% else %>
+                  <%=link_to "いいねする", item_like_path(item.id), data: { turbo_method: :create }, class: "tweet_likes" %>
+                <% end %>
+               <%end%>
         </div>
           </div>
         </div>

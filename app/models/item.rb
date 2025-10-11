@@ -25,7 +25,7 @@ class Item < ApplicationRecord
 
   has_one_attached :image, dependent: :destroy
 
-  def liked_by?(user)
-    likes.where(user_id: user.id).exists?
+  def liked_by?(item_id)
+    likes.where(item_id: item_id).exists?
   end
 end
