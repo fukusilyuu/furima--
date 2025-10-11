@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.includes(:user).order('created_at DESC')
     like = current_user.likes.build(item_id: params[:item_id])
+    follow = current_user.active_relationships.new(follower_id: params[:user_id])
   end
 
   def new

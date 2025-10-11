@@ -144,6 +144,11 @@
         <div class='item-info'>
           <h3 class='item-name'>
             <%= item.name %>
+            <% if item.user.followed_by?(current_user) %>
+      <%=link_to "フォロー中", item_relationships_path(item.id), data: { turbo_method: :delete } %>
+    <% else %>
+      <%=link_to "フォローする", item_relationships_path(item.id),data: { turbo_method: :post } %>
+    <% end %>
           </h3>
           <div class='item-price'>
             <span><%= item.price %>円<br><%= item.payment.name %></span>

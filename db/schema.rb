@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_10_112139) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -95,6 +95,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_10_112139) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.bigint "following_id"
+    t.bigint "follower_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
+    t.index ["following_id"], name: "index_relationships_on_following_id"
+    t.index ["item_id"], name: "index_relationships_on_item_id"
+    t.index ["user_id"], name: "index_relationships_on_user_id"
+  end
+
   create_table "replies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "context", null: false
     t.bigint "user_id", null: false
@@ -141,6 +154,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_10_112139) do
   add_foreign_key "likes", "users"
   add_foreign_key "orders", "items"
   add_foreign_key "orders", "users"
+  add_foreign_key "relationships", "items"
+  add_foreign_key "relationships", "users"
   add_foreign_key "replies", "comments"
   add_foreign_key "replies", "items"
   add_foreign_key "replies", "users"

@@ -11,9 +11,22 @@ class User < ApplicationRecord
     validates :firstname_kanji, :lastname_kanji, format: { with: /\A[ぁ-んァ-ン一-龥]+\z/ }
     validates :firstname_katakana, :lastname_katakana, format: { with: /\A[ァ-ヶー－]+\z/ }
   end
+
+  has_many :active_relationships, class_name: 'Relationship', foreign_key: :following_id
+  has_many :followings, through: :active_relationships, source: :follower
+
+  has_many :passive_relationships, class_name: 'Relationship', foreign_key: :follower_id
+  has_many :followers, through: :passive_relationships, source: :following
+
+  def followed_by?(user)
+    follower = passive_relationships.find_by(following_id: user.id)
+    follower.present?
+  end
+
   has_many :items
   has_many :replies
   has_many :comments
   has_many :likes
   has_many :orders
+  has_many :relationships
 end
