@@ -21,10 +21,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @comment = Comment.new
-    @reply = Reply.new
-    @comments = @item.comments.includes(:user)
-    @replies = @comment.replies.includes(:user)
   end
 
   def edit
@@ -65,7 +61,5 @@ class ItemsController < ApplicationController
   end
 
   def set_iine
-    like = current_user.likes.build(user_id: current_user.id, item_id: params[:id])
-    follow = current_user.active_relationships.new(follower_id: params[:item_id], follower_id: params[:user_id])
   end
 end

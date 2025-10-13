@@ -23,10 +23,13 @@ class User < ApplicationRecord
     follower.present?
   end
 
+  def liked_by?(user)
+    likes.where(user_id: user.id).exists?
+  end
+
   has_many :items
   has_many :replies
   has_many :comments
   has_many :likes
   has_many :orders
-  has_many :relationships
 end

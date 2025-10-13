@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_12_185100) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -78,8 +78,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
   end
 
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "item_id", null: false
+    t.bigint "user_id"
+    t.bigint "item_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_likes_on_item_id"
@@ -96,8 +96,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
   end
 
   create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "user", null: false
-    t.integer "item", null: false
     t.bigint "following_id"
     t.bigint "follower_id"
     t.datetime "created_at", null: false

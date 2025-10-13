@@ -16,16 +16,12 @@ class Item < ApplicationRecord
     validates :prefecture_id
     validates :days_id
   end
+
   belongs_to :user
-  has_many :replies, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :likes
+  has_many :replies, dependent: :destroy
   has_one :order
-  has_many :relationships
+  has_many :likes
 
   has_one_attached :image, dependent: :destroy
-
-  def liked_by?(item_id)
-    likes.where(item_id: item_id).exists?
-  end
 end

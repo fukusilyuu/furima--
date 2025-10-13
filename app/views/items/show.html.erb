@@ -2,6 +2,8 @@
 
 <%# 商品の概要 %>
 <div class="item-show">
+      <%= hidden_field_tag id: params[:id], @item.id %>
+
   <div class="item-box">
     <h2 class="name">
        <%= @item.name %>
@@ -116,7 +118,7 @@
            <%= l comment.created_at, class:"comment-created-at"%>
            <br>
            <%= comment.text %>
-         <div class="reply ">
+         <div class="reply hidden" id='reply'>
           <div class='reply-context'>
            <%=form_with model: @reply, local: true do |f|%>
             <%=f.text_field :context,class:'reply-text'%>
@@ -133,14 +135,14 @@
         <%end%>
        </div>
        <li class="comment-image">
-         <%=image_tag "images/comment.png",class:"c-i",width:"15",height:"20", id:"replies"%>
+         <%=image_tag "images/comment.png",class:"c-i",width:"15",height:"20", id:"replies", id:'replies'%>
          <%=image_tag"images/star.png",id:"star",width:"15",height:"15"%>
          <span id='star-counts'>0</span>
         <div id="like-btn<%= @item.id %>">
           <% if user_signed_in? && @item.liked_by?(current_user)%>
            <%=link_to "いいね済", item_likes_path(@item.id),  data: { turbo_method: :delete }, class: "item_likes" %>
           <% else %>
-            <%=link_to "いいねする", item_like_path(@item.id), data: { turbo_method: :create }, class: "item_likes" %>
+            <%=link_to "いいねする", item_like_path(@item.id), data: { turbo_method: :post }, class: "item_likes" %>
           <% end %>
         </div>
        </li>    
@@ -163,3 +165,4 @@
   <a href="#" class="another-item"><%= @item.genre.name %>をもっと見る</a>
 </div>
 <%= render "shared/footer" %>
+

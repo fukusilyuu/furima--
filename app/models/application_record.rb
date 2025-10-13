@@ -5,4 +5,8 @@ class ApplicationRecord < ActiveRecord::Base
     follower = passive_relationships.find_by(following_id: user.id)
     follower.present?
   end
+
+  def liked_by?(user)
+    likes.where(user_id: user.id).exists?
+  end
 end

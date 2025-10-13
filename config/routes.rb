@@ -10,11 +10,9 @@ Rails.application.routes.draw do
   get 'items/:id/likes' => 'likes#create', as: 'item_like'
   delete 'items/:id/likes' => 'likes#destroy', as: 'item_likes'
 
-  get 'items/:id' => 'items#show', as: 'items'
-
-  resources :comments
-  resources :reports, only: %i[new create]
-  resources :replies, only: [:create]
+  get 'items/:id' => 'items#new'
+  post '/items/new'
+  get 'items/:id' => 'items#show'
 
   resources :items do
     resource :relationships, only: %i[create destroy]
