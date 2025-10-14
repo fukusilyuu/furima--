@@ -1,11 +1,14 @@
 class RepliesController < ApplicationController
   def create
+    @comment = Comment.new
     @reply = Reply.new(reply_params)
     @comment = @reply.comment
     @replies = @comment.replies
-    @reply.save!
-
-    redirect_to item_path
+    if @reply.save
+      redirect_to item_path(@comment.reply)
+    else
+      render 'items/show'
+    end
   end
 
   private

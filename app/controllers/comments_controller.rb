@@ -1,5 +1,10 @@
 class CommentsController < ApplicationController
+  def new
+    @comment = Comment.new
+  end
+
   def create
+    @reply = Reply.new
     @comment = Comment.new(comment_params)
     @item = Item.find(params[:item_id])
     if @comment.save

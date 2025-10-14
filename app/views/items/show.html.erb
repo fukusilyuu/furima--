@@ -2,14 +2,13 @@
 
 <%# 商品の概要 %>
 <div class="item-show">
-      <%= hidden_field_tag id: params[:id], @item.id %>
 
   <div class="item-box">
     <h2 class="name">
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
-        <% if current_user != @user %>
-         <% if @item.user.followed_by?(current_user) %>
+       <% if current_user != @user %>
+         <% if @item.followed_by?(current_user) %>
            <%=link_to "フォロー中", item_relationship_path(@item.id), data: { turbo_method: :delete },class:'item-relationship'%>
          <% else %>
            <%=link_to "フォローする", item_relationships_path(@item.id),data: { turbo_method: :post }, class:'item-relationship'%>
@@ -96,7 +95,9 @@
   <%# /商品の概要 %>
 
   <div class="comment-box">
-     <%=form_with model: Comment.new ,url: item_comments_path(@item), local: true do |f|%>
+     <%=form_with model:@comment, url: item_comments_path(@item),local: true do |f|%>
+         <%#= render 'shared/error_messages', model: f.object %>
+
       <%=f.text_field :text, class:"comment-text"%>
       <p class="comment-warn">
         相手のことを考え丁寧なコメントを心がけましょう。
@@ -118,9 +119,10 @@
            <%= l comment.created_at, class:"comment-created-at"%>
            <br>
            <%= comment.text %>
-         <div class="reply hidden" id='reply'>
+         <div class="reply " id='reply'>
           <div class='reply-context'>
-           <%=form_with model: @reply, local: true do |f|%>
+           <%=form_with(model:[@comment,@reply], url: item_comments_path(@item),local: true) do |f|%>
+           <%#= render 'shared/error_messages', model: f.object %>
             <%=f.text_field :context,class:'reply-text'%>
             <%=f.submit '送信', class:'reply-submit'%>
           </div>
