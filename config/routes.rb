@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   root 'items#index'
   # get 'up' => 'rails/health#show', as: :rails_health_check
 
-  get 'items/:id/relationships' => 'relationships#create', as: 'item_relationships'
-  delete 'items/:id/relationships' => 'relationships#destroy', as: 'item_relationship'
+  get 'users/:id/relationships' => 'relationships#create', as: 'user_relationships'
+  delete 'users/:id/relationships' => 'relationships#destroy', as: 'user_relationship'
 
   get 'items/:id/likes' => 'likes#create', as: 'item_like'
   delete 'items/:id/likes' => 'likes#destroy', as: 'item_likes'
@@ -16,9 +16,12 @@ Rails.application.routes.draw do
   # post '/items/show', as: 'item'
   #=> 'items#show'
   # post '/items/:id/replies' => 'reply#create', as: 'item_comments'
+  #
+  resources :users do
+    resources :relationships, only: %i[create destroy]
+  end
 
   resources :items do
-    resource :relationships, only: %i[create destroy]
     resources :orders, only: %i[index create]
     resources :likes, only: %i[create destroy]
     resources :comments do

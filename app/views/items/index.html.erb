@@ -144,10 +144,11 @@
         <div class='item-info'>
           <h3 class='item-name'>
             <%= item.name %>
-            <% if item.user.followed_by?(current_user) %>
-      <%=link_to "フォロー中", item_relationship_path(item.id), data: { turbo_method: :delete }, class:'item-relationship' %>
+                <%= hidden_field_tag :id @user %>
+    <% if @user && @user.followed_by?(current_user) %>
+      <%=link_to "フォロー中", user_relationship_path(:id), data: { turbo_method: :delete }, class:'item-relationship' %>
     <% else %>
-      <%=link_to "フォローする", item_relationships_path(item.id),data: { turbo_method: :post }, class:'item-relationship'%>
+      <%=link_to "フォローする", user_relationships_path(:id), data: { turbo_method: :post }, class:'item-relationship'%>
     <% end %>
           </h3>
           <div class='item-price'>

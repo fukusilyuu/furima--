@@ -18,11 +18,6 @@ class User < ApplicationRecord
   has_many :passive_relationships, class_name: 'Relationship', foreign_key: :follower_id
   has_many :followers, through: :passive_relationships, source: :following
 
-  def followed_by?(user)
-    follower = passive_relationships.find_by(following_id: user.id)
-    follower.present?
-  end
-
   def liked_by?(user)
     likes.where(user_id: user.id).exists?
   end

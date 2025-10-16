@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   before_action :set_iine, only: :index
   def index
     @items = Item.includes(:user).order('created_at DESC')
+    @user = User.new
   end
 
   def new

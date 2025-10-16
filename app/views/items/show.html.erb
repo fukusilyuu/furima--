@@ -1,4 +1,5 @@
 <%= render "shared/header" %>
+<script src="reply.js"></script>
 
 <%# 商品の概要 %>
 <div class="item-show">
@@ -7,13 +8,15 @@
     <h2 class="name">
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
-       <% if current_user != @user %>
-         <% if @item.followed_by?(current_user) %>
-           <%=link_to "フォロー中", item_relationship_path(@item.id), data: { turbo_method: :delete },class:'item-relationship'%>
-         <% else %>
-           <%=link_to "フォローする", item_relationships_path(@item.id),data: { turbo_method: :post }, class:'item-relationship'%>
-         <% end %>
-        <%end%>
+           <%= hidden_field_tag :id, @user %>
+
+        <% if @user && @user.followed_by?(current_user) %>
+            <%=link_to "フォローする", user_relationship_path, data: { turbo_method: :create }, class:'item-relationship'%>
+          <% else %>
+            <%=link_to "フォロー中", user_relationships_path, data: { turbo_method: :delete }, class:'item-relationship' %>
+          <% end %>
+          <%#元は@user%>
+       <%#end%>
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image, class:"item-box-img" %>
@@ -108,10 +111,10 @@
         <%= image_tag "images/comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>   
           <span>コメントする<span>
       </button>
-      <div class="comment-btn2">
+      <div class="comment-btn2" id='comment-ran'>
            <span id="comment-ran" >コメント欄</span>
       </div>
-      <ul class="comments">
+      <ul class="comments hidden" id='comments'>
        <%@comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
@@ -119,7 +122,7 @@
            <%= l comment.created_at, class:"comment-created-at"%>
            <br>
            <%= comment.text %>
-         <div class="reply " id='reply'>
+         <div class="reply hidden" id='reply'>
           <div class='reply-context'>
            <%=form_with(model:[@comment,@reply], url: item_comments_path(@item),local: true) do |f|%>
            <%#= render 'shared/error_messages', model: f.object %>
