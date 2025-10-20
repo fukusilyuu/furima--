@@ -7,7 +7,7 @@ pin_all_from 'app/javascript/controllers', under: 'controllers'
 
 # pin '@hotwired/turbo-rails', to: 'https://cdn.jsdelivr.net/npm/@hotwired/turbo-rails@8.0.4/app/javascript/turbo/index.js', preload: true
 
-# pin 'card', to: 'card.js'
+pin 'card', to: 'card.js'
 pin 'comment', to: 'comment.js'
 pin 'price', to: 'price.js'
 pin 'reply', to: 'reply.js'

@@ -1,5 +1,6 @@
 document.addEventListener("turbo:load", () => {
   const CommentRan = document.getElementById("comment-ran");
+  if (!CommentRan) return;
   const Comments = document.getElementById("comments")
   CommentRan.addEventListener('click',function() {
     Comments.setAttribute("style", "display:block;");

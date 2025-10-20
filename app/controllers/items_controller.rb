@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   before_action :set_iine, only: :index
   def index
     @items = Item.includes(:user).order('created_at DESC')
-    @user = User.new
+    @users = User.all
   end
 
   def new
@@ -22,8 +22,10 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @user = User.new
     @comment = Comment.new
     @reply = Reply.new
+    @users = User.all
     @comments = @item.comments.includes(:user)
     @replies = @comment.replies.includes(:user)
   end

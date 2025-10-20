@@ -1,13 +1,14 @@
 class RepliesController < ApplicationController
   def create
-    @comment = Comment.new
-    @reply = Reply.new(reply_params)
-    @comment = @reply.comment
-    @replies = @comment.replies
+    @item = Item.find(params[:item_id])
+    @comment = @item.comments.find(params[:comment_id])
+    @reply = @comment.replies.new(reply_params)
+    @reply.user_id = current_user.id # ログイン中ユーザーを紐づける場合
+
     if @reply.save
-      redirect_to item_path(@comment.reply)
+      redirect_to item_path(@item), notice: '返信を投稿しました'
     else
-      render 'items/show'
+      render 'items/show', status: :unprocessable_entity
     end
   end
 

@@ -80,9 +80,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_12_185100) do
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "item_id"
+    t.bigint "comment_id"
+    t.bigint "reply_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_likes_on_comment_id"
     t.index ["item_id"], name: "index_likes_on_item_id"
+    t.index ["reply_id"], name: "index_likes_on_reply_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
@@ -96,12 +100,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_12_185100) do
   end
 
   create_table "relationships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "following_id"
     t.bigint "follower_id"
+    t.bigint "followed_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
-    t.index ["following_id"], name: "index_relationships_on_following_id"
   end
 
   create_table "replies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -146,10 +150,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_12_185100) do
   add_foreign_key "comments", "items"
   add_foreign_key "comments", "users"
   add_foreign_key "items", "users"
+  add_foreign_key "likes", "comments"
   add_foreign_key "likes", "items"
+  add_foreign_key "likes", "replies"
   add_foreign_key "likes", "users"
   add_foreign_key "orders", "items"
   add_foreign_key "orders", "users"
+  add_foreign_key "relationships", "users", column: "followed_id"
+  add_foreign_key "relationships", "users", column: "follower_id"
   add_foreign_key "replies", "comments"
   add_foreign_key "replies", "items"
   add_foreign_key "replies", "users"

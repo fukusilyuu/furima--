@@ -12,7 +12,8 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to root_path
     else
-      @user = @item.user
+      @item = @user.item
+      @users = @item.user
       render :new, status: :unprocessable_entity
     end
   end

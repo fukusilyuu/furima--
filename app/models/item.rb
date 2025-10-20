@@ -21,12 +21,7 @@ class Item < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :replies
   has_one :order
-  has_many :likes
+  has_many :likes, dependent: :destroy
 
   has_one_attached :image, dependent: :destroy
-
-  def followed_by?(user)
-    follower = passive_relationships.find_by(following_id: user.id)
-    follower.present?
-  end
 end
