@@ -23,11 +23,29 @@
 }
 
 .reply-list{
-  display: flex;
   padding: 7px;
   border-bottom: 1px solid gainsboro;
 }
 
 .reply-context{
   margin-left: 15px;
+}
+
+
+.reply-images{
+  display: flex;
+  margin-left: 5px;
+}
+
+.reply-image{
+  margin-right: 10px;
+}
+
+.reply-likes{
+  margin-right: 10px;
+
+}
+
+.ro{
+  display: flex;
 }

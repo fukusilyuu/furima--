@@ -114,7 +114,7 @@
            <span id="comment-ran">コメント欄</span>
       </div>
       <%end%>
-      <ul class="comments hidden" id='comments'>
+      <ul class="comments " id='comments'>
        <%@comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
@@ -122,7 +122,7 @@
            <%= l comment.created_at, class:"comment-created-at"%>
            <br>
            <%= comment.text %>
-           <div class="reply hidden" id='reply'>
+           <div class="reply " id='reply'>
              <div class='reply-context'>
            <%=form_with model: Reply.new, url: item_comment_replies_path(@item, comment), local: true do |f|%>
            <%#= render 'shared/error_messages', model: f.object wh%>
@@ -133,22 +133,36 @@
            <%comment.replies.each do |reply|%>
           <div class="reply-lists">
             <div class="reply-list">
+                            <div class='ro'>
+
               <%=reply.user.nickname%> =>
-              <div class='reply-context'><%=reply.context %></div>
-            </div>
+              <div class='reply-context'><%=reply.context %></div>  
+              </div>
+              <br>
+               <div class="reply-images">
+         <%=image_tag "images/comment.png",class:"reply-image",width:"15",height:"20", id:'replies'%>
+         <span id='star-counts'>0</span>
+        <div id="like-btn<%= reply.id %>">
+          <% if user_signed_in? && reply.liked_by?(current_user)%>
+           <%=link_to "❤️", item_like_path(reply.id), data: { turbo_method: :delete }, class: "reply-likes" %>
+          <% else %>
+            <%=link_to "♡", item_likes_path(reply.id), data: { turbo_method: :post }, class: "reply-likes" %>
+          <% end %>
+        </div>
+       </div>
+            </div>          
           </div>
          <%end%>
        </div>
            <br>
              <li class="comment-images">
          <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20", id:'replies'%>
-         <%=image_tag"images/star.png",id:"star",width:"15",height:"15"%>
          <span id='star-counts'>0</span>
-        <div id="like-btn<%= @item.id %>">
-          <% if user_signed_in? && @item.liked_by?(current_user)%>
-           <%=link_to "いいね済", item_like_path(@item.id),  data: { turbo_method: :delete }, class: "item_likes" %>
+        <div id="like-btn<%= comment.id %>">
+          <% if user_signed_in? && comment.liked_by?(current_user)%>
+           <%=link_to "❤️", item_like_path(comment.id), data: { turbo_method: :delete }, class: "comment-likes" %>
           <% else %>
-            <%=link_to "いいねする", item_likes_path(@item.id), data: { turbo_method: :post }, class: "item_likes" %>
+            <%=link_to "♡", item_likes_path(comment.id), data: { turbo_method: :post }, class: "comment-likes" %>
           <% end %>
         </div>
        </li>
