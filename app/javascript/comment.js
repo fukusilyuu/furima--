@@ -1,11 +1,18 @@
 document.addEventListener("turbo:load", () => {
   const CommentRan = document.getElementById("comment-ran");
   if (!CommentRan) return;
-  const Comments = document.getElementById("comments")
-  CommentRan.addEventListener('click',function() {
-    Comments.setAttribute("style", "display:block;");
-    CommentRan.addEventListener('click', function() {
-      Comments.setAttribute("style", "display:none;");
-    })
-  })
+ 
+  const comments = document.getElementById("comments");
+  if (!comments) return;
+
+  CommentRan.addEventListener("click", () => {
+    // displayがnoneならblockに、それ以外ならnoneに切り替え
+    if (comments.style.display === "none" || comments.classList.contains("hidden")) {
+      comments.style.display = "block";
+      comments.classList.remove("hidden");
+    } else {
+      comments.style.display = "none";
+      comments.classList.add("hidden");
+    }
+  });
 });

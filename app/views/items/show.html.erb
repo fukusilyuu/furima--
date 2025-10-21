@@ -114,7 +114,7 @@
            <span id="comment-ran">コメント欄</span>
       </div>
       <%end%>
-      <ul class="comments " id='comments'>
+      <ul class="comments hidden" id='comments'>
        <%@comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
@@ -141,7 +141,7 @@
        </div>
            <br>
              <li class="comment-images">
-         <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20", id:"replies", id:'replies'%>
+         <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20", id:'replies'%>
          <%=image_tag"images/star.png",id:"star",width:"15",height:"15"%>
          <span id='star-counts'>0</span>
         <div id="like-btn<%= @item.id %>">
