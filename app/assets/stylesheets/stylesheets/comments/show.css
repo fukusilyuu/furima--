@@ -19,24 +19,37 @@
 .comment-lists{
   display: flex;
   justify-content: space-between;
+
 }
 
 
 .comment-list{
   display: flex;
+
 }
 
+.comment-text{
+}
+
+.rr{
+  display: flex;
+}
+
+.ro{
+  display: flex;
+}
 
 .c-t{
   margin-left: 5px;
 }
 
-.comment-image{
+.comment-images{
   margin-left: 5px;
   border-bottom: 1px solid whitesmoke;
+  padding: 10px;
   display: flex;
 }
 
-.c-i{
+.comment-image{
   margin-right: 10px;
 }

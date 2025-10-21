@@ -287,6 +287,10 @@ a {
   color: inherit;
 }
 
+.user-point{
+  border-bottom: 2px solid rgb(79, 79, 199);
+}
+
 .item-price {
   font-size: 1.5vh;
   display: flex;

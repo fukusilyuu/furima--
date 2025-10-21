@@ -114,7 +114,7 @@
            <span id="comment-ran">コメント欄</span>
       </div>
       <%end%>
-      <ul class="comments hidden" id='comments'>
+      <ul class="comments " id='comments'>
        <%@comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
@@ -122,10 +122,10 @@
            <%= l comment.created_at, class:"comment-created-at"%>
            <br>
            <%= comment.text %>
-           <div class="reply " id='reply'>
+           <div class="reply hidden" id='reply'>
              <div class='reply-context'>
            <%=form_with model: Reply.new, url: item_comment_replies_path(@item, comment), local: true do |f|%>
-           <%#= render 'shared/error_messages', model: f.object %>
+           <%#= render 'shared/error_messages', model: f.object wh%>
             <%=f.text_field :context,class:'reply-text'%>
             <%=f.submit '送信', class:'reply-submit'%>
             <%end%>
@@ -133,18 +133,15 @@
            <%comment.replies.each do |reply|%>
           <div class="reply-lists">
             <div class="reply-list">
-              <%=reply.user.nickname%>
-              <%=reply.context%>
+              <%=reply.user.nickname%> =>
+              <div class='reply-context'><%=reply.context %></div>
             </div>
           </div>
          <%end%>
-        <%end%>
        </div>
-       </li>
-      </li>
            <br>
-           <li class="comment-image">
-         <%=image_tag "images/comment.png",class:"c-i",width:"15",height:"20", id:"replies", id:'replies'%>
+             <li class="comment-images">
+         <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20", id:"replies", id:'replies'%>
          <%=image_tag"images/star.png",id:"star",width:"15",height:"15"%>
          <span id='star-counts'>0</span>
         <div id="like-btn<%= @item.id %>">
@@ -154,7 +151,12 @@
             <%=link_to "いいねする", item_likes_path(@item.id), data: { turbo_method: :post }, class: "item_likes" %>
           <% end %>
         </div>
-       </li>  
+       </li>
+       </li>
+        <%#r%>
+<%end%>
+       <%#i%>
+     </li>
       </ul>    
   </div>
   <div class="links">
