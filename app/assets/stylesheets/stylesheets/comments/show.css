@@ -12,14 +12,14 @@
 }
 
 .comments{
-  margin: 0px 0 0 15px;
+  margin: 20px 0 0 15px;
   display: block;
 }
 
 .comment-lists{
   display: flex;
   justify-content: space-between;
-
+  margin-top: 20px;
 }
 
 
@@ -56,7 +56,21 @@
 
 
 .ten-ran{
+  display: flex;
   margin-left: 19px;
 }
 
 .comment-show{}
+
+.show-lists{
+  margin-left: 5px;
+}
+
+.show-list{
+}
+
+
+.comment-text2{
+  display: flex;
+  margin-left: 4px;
+}

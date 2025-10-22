@@ -125,15 +125,17 @@
               <span>:</span>
             </div>
              <ul class="show-lists">
-              <li>
-               <%#=link_to "編集", edit_comment_path, class:"show-list" %>
+              <li class='show-list'>
+                
+                <%=link_to "編集", edit_item_comment_path(@item.id,comment.id), data: { turbo_frame: "modal" }, class:"show-list" %>
               <br>
-               <%#= link_to "削除", comment_path, data: {turbo_method: :delete},  class:"show-list"%>
-              </li>
-            </ul>
+                <%= link_to "削除", item_comment_path(@item.id), data: {turbo_method: :delete},  class:"show-list"%>
+                 <%#end%>
+               </li>
+             </ul>
            </div>
            <br>
-           <%= comment.text %>
+           <li class='comment-text2'><%= comment.text %></li>
            <div class="reply hidden" id='reply-show'>
              <div class='reply-context'>
            <%=form_with model: Reply.new, url: item_comment_replies_path(@item, comment), local: true do |f|%>

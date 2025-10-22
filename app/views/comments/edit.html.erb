@@ -1,0 +1,12 @@
+<h3>コメントを編集</h3>
+
+<%= form_with(model:[@item,@comment], url: item_comment_path, local: true ) do |f| %>
+<div>
+  <%=f.text_area :text%>
+</div>
+<div>
+    <%= f.submit "更新する" %>
+  </div>
+<% end %>
+
+<%= link_to "戻る", item_path(:id)%>
