@@ -10,13 +10,8 @@ Rails.application.routes.draw do
   get 'items/:item_id/likes' => 'likes#create', as: 'item_likes'
   delete 'items/:item_id/likes' => 'likes#destroy', as: 'item_like'
 
-  # get 'comments/:id' => 'comments#create'
-  # post '/comments/new', as: 'new_item'
-  # get 'items' => 'items#show'
-  # post '/items/show', as: 'item'
-  #=> 'items#show'
-  # post '/items/:item_id/comments/:comment_id/replies' => 'comments#create'
-  # post '/items/comments/:item_id/replies' => 'replies#create', as: 'item_comments'
+  # get 'items/:item_id/comments/:comment_id/likes' => 'likes#create', as: 'item_comments_likes'
+  # delete 'items/:item_id/likes' => 'likes#destroy', as: 'item_like'
 
   resources :users, only: [] do
     resources :relationships, only: %i[create destroy]
@@ -28,9 +23,8 @@ Rails.application.routes.draw do
     resources :orders, only: %i[index create]
     resources :likes, only: %i[create destroy]
     resources :comments do
-      resources :replies, only: %i[create destroy] do
-        resources :likes, only: %i[create destroy]
-      end
+      resources :replies
+      # resources :likes, only: %i[create destroy]
     end
   end
 end
