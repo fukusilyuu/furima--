@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_comment, only: %i[edit update destroy]
   before_action :set_item, only: %i[update destroy]
 
@@ -11,7 +12,6 @@ class CommentsController < ApplicationController
 
     @comment = Comment.new(comment_params)
     @comment.user = current_user
-    # @item = Item.find(params[:item_id])
     if @comment.save
       redirect_to item_path(@comment.item)
       CommentChannel.broadcast_to @item, { comment: @comment, user: @comment.user }
@@ -25,6 +25,9 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    return if @item.comment.nil?
+
+    redirect_to item_path
   end
 
   def update
@@ -40,9 +43,15 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    return unless @comment.destroy
+    if @comment.user == current_user
+      @comment.destroy
+      redirect_to @item, notice: 'コメントを削除しました'
+    else
+      redirect_to @item, alert: '他のユーザーのコメントは削除できません'
+    end
+    return if @item.comments.nil?
 
-    redirect_to root_path
+    redirect_to item_path
   end
 
   private
@@ -52,7 +61,7 @@ class CommentsController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = Item.find(params[:item_id])
   end
 
   def set_comment

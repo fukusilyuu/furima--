@@ -98,6 +98,7 @@
   <%# /商品の概要 %>
 
   <div class="comment-box">
+    <% if user_signed_in? %>
      <%=form_with(model:[@item,@comment],local: true) do |f|%>
          <%#= render 'shared/error_messages', model: f.object , url: item_comments_path(@item)%>
       <%=f.text_field :text, class:"comment-text"%>
@@ -114,8 +115,9 @@
            <span id="comment-ran">コメント欄</span>
       </div>
       <%end%>
+     <%end%>
       <ul class="comments " id='comments'>
-       <%@comments.each do |comment| %>
+       <%@item.comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
            <%= comment.user.nickname %>
@@ -126,11 +128,11 @@
             </div>
              <ul class="show-lists">
               <li class='show-list'>
-                
-                <%=link_to "編集", edit_item_comment_path(@item.id,comment.id), data: { turbo_frame: "modal" }, class:"show-list" %>
+               <% if user_signed_in? && comment.user == current_user %>
+                <%=link_to "編集", edit_item_comment_path(@item,comment), data: { turbo_frame: "modal" }, class:"show-list" %>
               <br>
-                <%= link_to "削除", item_comment_path(@item.id), data: {turbo_method: :delete},  class:"show-list"%>
-                 <%#end%>
+                <%= link_to "削除", item_comment_path(@item,comment), data: {turbo_method: :delete},  class:"show-list"%>
+               <%end%>
                </li>
              </ul>
            </div>
