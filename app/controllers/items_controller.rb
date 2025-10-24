@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  # before_action :authenticate_user!, expect: %i[index show]
   before_action :set_item, only: %i[show edit update destroy]
   before_action :set_edit_destroy, only: %i[edit destroy]
   def index
@@ -57,7 +57,8 @@ class ItemsController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = Item.find_by(id: params[:item_id] || params[:id])
+    redirect_to root_path, alert: '商品が見つかりません。' unless @item
   end
 
   def set_edit_destroy

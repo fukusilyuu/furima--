@@ -143,11 +143,11 @@
         </div>
         <div class='item-info'>
           <h3 class='item-name'>
-            <%# if item.user.id == current_user.id %>
+            <% if item.user.id == current_user.id %>
              <span class='user-point'> <%= item.name %></span>
-            <%#else%>
+            <%else%>
               <%= item.name %>
-            <%#end%>
+            <%end%>
           <% @users.each do |user| %>
              <% next if item.user == current_user %>
              <% next if user == current_user %>

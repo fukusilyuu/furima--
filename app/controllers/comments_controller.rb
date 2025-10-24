@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!
   before_action :set_comment, only: %i[edit update destroy]
   before_action :set_item, only: %i[update destroy]
 
@@ -65,6 +65,7 @@ class CommentsController < ApplicationController
   end
 
   def set_comment
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find(params[:comment_id] || params[:id])
+    redirect_to root_path, alert: '商品が見つかりません。' unless @comment
   end
 end

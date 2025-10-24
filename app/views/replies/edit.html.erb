@@ -1,0 +1,11 @@
+<h3>返信内容を編集</h3>
+<%= form_with(model: [@item, @comment, @reply], local: true) do |f| %>
+ <div>
+  <%=f.text_area :context%>
+ </div>
+ <div>
+    <%= f.submit "更新する" %>
+ </div>
+ <% end %>
+
+<%= link_to "戻る", item_path(:id)%>
