@@ -116,7 +116,7 @@
       </div>
       <%end%>
      <%end%>
-      <ul class="comments " id='comments'>
+      <ul class="comments hidden" id='comments'>
        <%@item.comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
@@ -137,7 +137,7 @@
            </div>
            <br>
            <li class='comment-text2'><%= comment.text %></li>
-           <div class="reply " id='reply-show'>
+           <div class="reply hidden" id='reply-show'>
              <div class='reply-context'>
            <%=form_with model: Reply.new, url: item_comment_replies_path(@item, comment), local: true do |f|%>
            <%#= render 'shared/error_messages', model: f.object wh%>
