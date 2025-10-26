@@ -1,0 +1,83 @@
+.furima-icon-edit{
+  height: 70px;
+  margin-left: 590px;
+}
+
+.update{
+  width: 100vw;
+  height: 90vh;
+  background-color: #e9e5e5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.share-update{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  width: 700px;
+  height: 400px;
+
+}
+
+.share-h3{
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.share-weight-bold-text{
+  display: flex;
+  margin-top: 30px;
+}
+
+
+.share-context2{
+  width: 560px;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.share-indispensable{
+  background: #ea352d;
+  margin: 0 0 10px 8px;
+  padding: 3px;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.share-context-edit{
+  font-weight: bold;
+  min-width: 170px;
+  margin: 0 0 10px 20px;
+}
+
+.share-sell-btn-contents{
+  width: 100%;
+  text-align: center;
+}
+
+.share-sell-btn{
+  background: #ea352d;
+  border: 1px solid #ea352d;
+  color: #fff;
+  width: 98%;
+  height: 50px;
+  font-size: 14px;
+  margin: 20px 0 4vh 0;
+}
+
+.share-back-btn{
+  background: #aaa;
+  border: 1px solid #aaa;
+  color: #ffffff;
+  width: 50%;
+  padding: 15px 35%;
+  text-decoration: none;
+}

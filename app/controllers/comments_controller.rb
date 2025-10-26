@@ -25,9 +25,9 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    return if @item.comment.nil?
+    return if @comment.user == current_user
 
-    redirect_to item_path
+    redirect_to root_path, alert: '権限がありません。'
   end
 
   def update
