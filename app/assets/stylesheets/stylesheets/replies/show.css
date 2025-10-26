@@ -1,16 +1,68 @@
-.reply{
-  background-color: #3CCACE;
+.show-lists{
+  display: flex;
+  justify-content:space-between ;
+}
+
+.reply {
+  background-color: aliceblue;
+  margin-left: 198px;
+}
+
+
+.reply-context {
+  margin-left: 15px;
+
+}
+
+.reply-text {
+  width: 79px;
+  height: 24px;
+}
+
+
+.reply-submit {
   width: 50px;
+  height: 24px;
+}
+
+.reply-lists{
+  display: block;
+  justify-content: space-between;
+}
+
+.reply-list{
+  padding: 7px;
+  border-bottom: 1px solid gainsboro;
+}
+
+.reply-context-r{
+  margin-left: 1px;
 }
 
 
-.reply-context{
-  background-color: rgb(53, 132, 202);
+.reply-images{
+  display: flex;
+  margin-left: 5px;
 }
 
-.reply-text{
-  width: 30px;
+.reply-image{
+  margin-right: 10px;
+}
+
+.reply-likes{
+  margin-right: 10px;
+
+}
+
+.ro{
+  display: flex;
 }
 
 
-.reply-submit{}
+.replies{
+  padding: 22px;
+}
+
+.replies-reply{
+  display: flex;
+}

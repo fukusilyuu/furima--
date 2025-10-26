@@ -12,25 +12,65 @@
 }
 
 .comments{
-  background-color:#fff;
-  margin: 0px 0 0 15px;
-  display: flex;
-  justify-content: space-between;
+  margin: 20px 0 0 15px;
+  display: block;
 }
 
 .comment-lists{
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
+
 .comment-list{
-  display: block;
-  justify-content: left;
+  display: flex;
+
+}
+
+.comment-text{
+}
+
+.rr{
+  display: flex;
+}
+
+.c-t{
+  margin-left: 5px;
+}
+
+.comment-images{
+  margin-left: 5px;
+  border-bottom: 1px solid whitesmoke;
+  padding: 10px;
+  display: flex;
 }
 
 .comment-image{
-
-  margin-bottom: 40px;
-  border-bottom: 1px solid whitesmoke;
+  margin-right: 10px;
 }
 
+.comment-likes{
+  margin-right: 10px;
+}
+
+
+.ten-ran{
+  display: flex;
+  margin-left: 19px;
+}
+
+.comment-show{}
+
+.show-lists{
+  margin-left: 5px;
+}
+
+.show-list{
+}
+
+
+.comment-text2{
+  display: flex;
+  margin-left: 4px;
+}

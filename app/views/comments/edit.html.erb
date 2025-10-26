@@ -1,0 +1,21 @@
+<%= link_to image_tag("images/furima-logo-color.png", class:"furima-icon-edit"), "/" %>
+<div class='update'>
+ <div class='share-update'> 
+  <div class="share-update-lists">
+   <h3 class='share-h3'>コメント内容を編集</h3>
+   <%= form_with(model: [@item, @comment], url: item_comment_path, local: true) do |f| %>
+   <div class='share-weight-bold-text'>
+    <h5 class="share-context-edit">返信内容</h5>
+    <h6 class='share-indispensable'>必須</h6>
+    </div>
+    <%=f.text_area :text, class:'share-context2'%>
+   <div class='share-sell-btn-contents'>
+    <%= f.submit "更新する", class:"share-sell-btn" %>
+   <% end %>
+   <br>
+
+  <%= link_to "もどる", item_path(:id),data: { turbo_method: :post }, class:"share-back-btn" %>
+   </div>
+  </div>
+ </div>
+</div>

@@ -284,6 +284,11 @@ a {
 
 .item-name {
   font-size: 2.5vh;
+  color: inherit;
+}
+
+.user-point{
+  border-bottom: 2px solid rgb(79, 79, 199);
 }
 
 .item-price {

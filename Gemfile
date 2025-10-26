@@ -89,3 +89,4 @@ gem 'ransack'
 
 gem 'rubocop', require:false
 gem 'rubocop-rails', require:false
+gem "webpacker", "~> 5.4"
