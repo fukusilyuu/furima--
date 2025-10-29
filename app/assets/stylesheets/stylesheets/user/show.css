@@ -1,0 +1,66 @@
+.page{
+  width: 100vw;
+  height: 100vh;
+  border-top: 30px solid rgb(237, 237, 237);
+  background-color: rgb(237, 237, 237);
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-information{
+  padding: 25px;
+  background-color: white;
+  width: 450px;
+  height: 450px;
+  margin-left: 30px;
+}
+
+.profile{
+  margin: 20px 40px;
+  display: flex;
+}
+
+.user-icon{
+  margin-left: 130px;
+}
+
+
+.user-h1{
+  font-size: 23px;
+  margin-top: 40px;
+}
+
+.follow-follower{
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid gray;
+  padding: 15px;
+}
+
+
+.user-relationship{
+  display: flex;
+  justify-content: center;
+  padding: 23px;
+  border: 1px solid gray;
+}
+
+.product-lists{
+  width: 900px;
+  padding: 25px;
+  background-color: white;
+  margin-right: 30px;
+
+}
+
+.product-list{
+  display: flex;
+}
+
+.user-img{
+  margin: 25px;
+
+}
+
+.item-name{
+}
