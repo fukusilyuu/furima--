@@ -4,6 +4,14 @@
   <div class="share-update-lists">
    <h3 class='share-h3'>変更</h3>
    <%= form_with model: @user, local: true do |f| %>
+   <div class="form-group">
+    <div class='form-text-wrap'>
+      <label class="form-text">アイコン(下記のは初期アイコンです）</label>
+      <span class="indispensable">必須</span>
+    </div>
+    <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg",width:"45",height:"50", class: "user-img" %>
+    <%= f.file_field :image, id:"user-image" %>
+  </div>
    <div class='share-weight-bold-text'>
     <h5 class="share-context-edit">お名前</h5>
     <h6 class='share-indispensable'>必須</h6>

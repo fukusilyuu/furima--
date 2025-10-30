@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, expect: %i[index show]
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
@@ -26,12 +27,23 @@ class UsersController < ApplicationController
   end
 
   def edit
+    return if @user == current_user
+
+    redirect_to user_path, alert: '権限がありません。'
   end
 
   def update
+    if @user.update(user_params)
+      redirect_to item_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
+    return unless @user.destroy
+
+    redirect_to root_path
   end
 
   private

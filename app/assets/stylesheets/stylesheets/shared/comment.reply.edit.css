@@ -6,7 +6,7 @@
 
 .update-user{
   width: 100vw;
-  height: 160vh;
+  height: 190vh;
   background-color: #e9e5e5;
   display: flex;
   justify-content: center;
@@ -29,7 +29,7 @@
   align-items: center;
   background-color: #fff;
   width: 700px;
-  height: 1100px;
+  height: 1300px;
 }
 
 .share-update{
