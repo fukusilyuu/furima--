@@ -8,6 +8,9 @@
 }
 
 /* form-wrapは商品購入画面でも使用しています */
+.initial-icon{
+}
+
 .form-wrap {
   width: 50%;
   background-color: white;
@@ -47,6 +50,10 @@
 .form-text {
   font-size: 14px;
   font-weight: bold;
+}
+
+.user-img{
+  margin-bottom: 20px;
 }
 
 .input-default {

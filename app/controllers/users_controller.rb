@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, expect: %i[index show]
+  before_action :set_user, only: %i[show edit update destroy]
+
   def index
     @users = User.all
   end
@@ -18,10 +21,39 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @items = Item.all
+    @users = User.all
+  end
+
+  def edit
+    return if @user == current_user
+
+    redirect_to user_path, alert: '権限がありません。'
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to item_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    return unless @user.destroy
+
+    redirect_to root_path
+  end
+
   private
 
   def user_params
     params.require(:user).permit(%i[nickname firstname_kanji lastname_kanji firstname_katakana
                                     lastname_katakana birth_date])
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

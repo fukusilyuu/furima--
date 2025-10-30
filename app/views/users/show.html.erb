@@ -1,0 +1,89 @@
+<%= render "shared/header" %>
+
+<div class="show-page">
+ <%#@users.each do |user|%>
+ <div class='page'>
+  <div class='user-information'>
+   <div class='profile'>
+    <div class="ten-ran-user">
+     <div class="mypage-show">
+       <span id='tenran'>:</span>
+     </div>
+     <div class='mypage-lists hidden' id='tenshow'>    
+      <div class='mypage-list'> 
+       <% if user_signed_in? && @user == current_user %>
+        <%=link_to "編集", edit_user_path(@user), class:"mypage-list" %>
+       <br>
+        <%= link_to "削除", user_path(@user), data: {turbo_method: :delete},  class:"mypage-list"%>
+       <%end%>
+      </div>
+     </div>
+    </div>
+    <%= image_tag @user.image,width:"105",height:"105",class:'user-icon'%>
+    <h1 class='user-h1'><%= "#{@user.nickname}"%></h1>
+   </div>
+   <div class='follow-follower'>
+      <h3>フォロー</h3>
+    <%@user.following.each do |user| %>
+      <p class=“f-user”><%= link_to user.nickname, user_path(user.id) %></p>
+    <% end %>
+      <h3>フォロワー</h3>
+    <% @user.followers.each do |user| %>
+      <p class=“f-user”><%= link_to user.nickname, user_path(user.id) %></p>
+    <% end %>
+      <h3>いいね</h3>
+    <% if user_signed_in? && current_user == @user%>
+    <% @user.likes.each do |user| %>
+      <p class=“f-user”><%= link_to user.nickname, user_path(user.id) %></p>
+    <%end%>
+    <%end%>
+  </div>
+  <div class='follow'>
+    <% @users.each do |user| %>
+     <%# next if item.user == current_user %>
+     <% next if user == current_user %>
+      <% if user.followed_by?(current_user) %>
+       <% relationship = current_user.active_relationships.find_by(followed_id: user.id) %>
+       <%= link_to "フォロー中", user_relationship_path(user,relationship), data: { turbo_method: :delete }, class: "user-relationship" %>
+      <%else%>
+       <%= link_to "フォローする", user_relationships_path(user), data: { turbo_method: :post }, class: "user-relationship" %>
+      <% end %>
+    <%end%>
+  </div>
+</div>
+
+
+
+
+  <div class='product-lists'>
+   <% if @user.items.length == 0 %>
+    <h1 class='user-h1'>商品なし</h1>
+   <%else%>
+    <h1 class='user-h1'><%= "#{@user.nickname} さんの商品一覧"%></h1>
+
+     <div class='product-list'>
+     <% @items.each do |item| %>
+     <%= link_to item_path(item),data: { turbo_method: :get } do %>
+      <%= image_tag item.image,width:"105",height:"105",class: "user-img" %>
+     <%end%>
+      <div class='item-name'>
+        <%= item.name%>
+      <br>
+       <%= item.price %>円<br><%= item.payment.name %>
+       <br>
+       <div id="like-btn<%= item.id %>">
+               <% if current_user != item %>
+                <% if user_signed_in? && item.liked_by?(current_user)%>
+                  <%=link_to "❤️", item_like_path(item.id),  data: { turbo_method: :delete }, class: "item-likes" 'delete-likes' %>
+                <% else %>
+                  <%=link_to "♡", item_likes_path(item.id), data: { turbo_method: :post }, class: "item-likes", id:'likes'%>
+                <% end %>
+               <%end%>
+        </div>
+       </div>
+     <%end%>
+     </div>
+  </div>
+  </div>
+ <%end%>
+</div>

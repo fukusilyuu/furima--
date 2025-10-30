@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   # get 'items/item_id/comments/comment_id/replies/:id' => 'replies#edit'
   # post 'items/item_id/comments/comment_id/replies/:id/edit' => 'replies#update'
 
-  resources :users, only: [] do
+  resources :users do
     resources :relationships, only: %i[create destroy]
   end
 

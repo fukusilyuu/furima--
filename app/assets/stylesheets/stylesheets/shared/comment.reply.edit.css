@@ -3,6 +3,16 @@
   margin-left: 590px;
 }
 
+
+.update-user{
+  width: 100vw;
+  height: 190vh;
+  background-color: #e9e5e5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .update{
   width: 100vw;
   height: 90vh;
@@ -13,14 +23,22 @@
 }
 
 
+.share-update-user{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  width: 700px;
+  height: 1300px;
+}
+
 .share-update{
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #fff;
   width: 700px;
-  height: 400px;
-
+  height: 500px;
 }
 
 .share-h3{
@@ -39,7 +57,29 @@
 .share-context2{
   width: 560px;
   border: 1px solid gray;
+  padding: 5px;
+  margin: 12px;
   border-radius: 10px;
+}
+
+.share-context3{
+  margin-left: 12px;
+  border: 1px solid gray;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.share-context4{
+  margin-left: 12px;
+  border: 1px solid gray;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.date-select-edit{
+  display: flex;
+  margin-left: 12px;
+
 }
 
 .share-indispensable{

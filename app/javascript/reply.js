@@ -17,15 +17,5 @@ document.addEventListener("turbo:load", () => {
     }
   });
 
-  const Replies = document.getElementById("replies");
-  const Reply = document.getElementById("reply");
-  Replies.addEventListener('click', () => {
-    if (Reply.style.display === "none" || Reply.classList.contains("hidden")) {
-      Reply.style.display = "block";
-      Reply.classList.remove("hidden");
-    } else {
-      Reply.style.display = "none";
-      Reply.classList.add("hidden");
-    }
-  });
+  
 });

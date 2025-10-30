@@ -144,7 +144,7 @@
         <div class='item-info'>
           <h3 class='item-name'>
             <% if item.user.id == current_user.id %>
-             <span class='user-point'> <%= item.name %></span>
+             <span class='user-point'><%item.name %></span>
             <%else%>
               <%= item.name %>
             <%end%>
