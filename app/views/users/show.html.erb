@@ -39,7 +39,6 @@
     <%end%>
   </div>
   <div class='follow'>
-        <%# @items.each do |item| %>
     <% @users.each do |user| %>
      <%# next if item.user == current_user %>
      <% next if user == current_user %>
@@ -49,7 +48,6 @@
       <%else%>
        <%= link_to "フォローする", user_relationships_path(user), data: { turbo_method: :post }, class: "user-relationship" %>
       <% end %>
-      <%#end%>
     <%end%>
   </div>
 </div>
