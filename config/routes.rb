@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resources :relationships, only: %i[create destroy]
 
   resources :items do
-    resources :orders, only: %i[index create]
+    resources :orders, only: %i[index create show]
     resources :likes, only: %i[create destroy]
     resources :comments do
       resources :replies
