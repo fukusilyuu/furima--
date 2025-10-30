@@ -124,9 +124,9 @@
            <%= l comment.created_at, class:"comment-created-at"%>
            <div class="ten-ran">
             <div class="comment-show">
-              <span>:</span>
+              <span id='tenran'>:</span>
             </div>
-             <ul class="show-lists">
+             <ul class="show-lists hidden" id='tenshow'>
               <li class='show-list'>
                <% if user_signed_in? && comment.user == current_user %>
                 <%=link_to "編集", edit_item_comment_path(@item,comment), data: { turbo_frame: "modal" }, class:"show-list" %>
@@ -153,9 +153,9 @@
              <div class='reply-context'><%=reply.context %></div>  
              <div class="ten-ran">
             <div class="comment-show">
-              <span>:</span>
+              <span id='tenran'>:</span>
             </div>
-             <ul class="show-lists">
+             <ul class="show-lists hidden" id='tenshow'>
               <li class='show-list'>
                <% if user_signed_in? && reply.user == current_user %>
                 <%=link_to "編集", edit_item_comment_reply_path(@item,comment,reply), data: { turbo_frame: "modal" }, class:"show-list" %>

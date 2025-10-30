@@ -7,9 +7,9 @@
    <div class='profile'>
     <div class="ten-ran-user">
      <div class="mypage-show">
-       <span>:</span>
+       <span id='tenran'>:</span>
      </div>
-     <div class='mypage-lists'>    
+     <div class='mypage-lists hidden' id='tenshow'>    
       <div class='mypage-list'> 
        <% if user_signed_in? && @user == current_user %>
         <%=link_to "編集", edit_user_path(@user), class:"mypage-list" %>

@@ -12,6 +12,7 @@ pin 'comment', to: 'comment.js'
 pin 'price', to: 'price.js'
 pin 'reply', to: 'reply.js'
 pin 'like', to: 'like.js'
+pin 'ten', to: 'ten.js'
 # pin 'report', to: 'report.js'
 pin 'all' # @0.0.0
 # pin '@hotwired/turbo-rails', to: '@hotwired--turbo-rails.js' # @8.0.18
