@@ -5,6 +5,20 @@
  <div class='page'>
   <div class='user-information'>
    <div class='profile'>
+    <div class="ten-ran-user">
+     <div class="mypage-show">
+       <span>:</span>
+     </div>
+     <div class='mypage-lists'>    
+      <div class='mypage-list'> 
+       <% if user_signed_in? && @user == current_user %>
+        <%=link_to "編集", edit_user_path(@user), class:"mypage-list" %>
+       <br>
+        <%= link_to "削除", user_path(@user), data: {turbo_method: :delete},  class:"mypage-list"%>
+       <%end%>
+      </div>
+     </div>
+    </div>
     <%= image_tag @user.image,width:"105",height:"105",class:'user-icon'%>
     <h1 class='user-h1'><%= "#{@user.nickname}"%></h1>
    </div>
