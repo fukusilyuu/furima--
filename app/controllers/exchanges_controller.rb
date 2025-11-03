@@ -25,8 +25,8 @@ class ExchangesController < ApplicationController
   private
 
   def exchange_params
-    params.require(:exchange).permit(:message).merge(user_id: current_user.id, item_id: params[:item_id],
-                                                     order_id: params[:order_id])
+    params.require(:exchange).permit(:message, :shipping).merge(user_id: current_user.id, item_id: params[:item_id],
+                                                                order_id: params[:order_id])
   end
 
   def set_order

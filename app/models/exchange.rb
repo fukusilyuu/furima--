@@ -4,4 +4,5 @@ class Exchange < ApplicationRecord
   belongs_to :order
 
   validates :message, presence: true
+  validates :shipping, presence: true
 end
