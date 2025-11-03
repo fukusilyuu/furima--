@@ -64,7 +64,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_01_144446) do
 
   create_table "exchanges", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "message", null: false
-    t.string "shipping", null: false
+    t.string "shipping"
     t.bigint "user_id", null: false
     t.bigint "item_id", null: false
     t.bigint "order_id", null: false

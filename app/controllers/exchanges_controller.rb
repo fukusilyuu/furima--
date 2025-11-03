@@ -4,10 +4,12 @@ class ExchangesController < ApplicationController
   def create
     @exchange = @order.exchanges.build(exchange_params)
     @exchange.user = current_user
+    @exchange.item = @order.item
     if @exchange.save
       redirect_to item_order_path(@order.item, @order)
     else
-      render 'orders/show'
+      @exchanges = @order.exchanges.includes(:user)
+      render 'orders/show', status: :unprocessable_entity
     end
   end
 
