@@ -17,21 +17,26 @@ class OrdersController < ApplicationController
       @order.save
       redirect_to root_path
     else
+      @item = @order.item
+      @orders = @item.orders
       gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render 'index', status: :unprocessable_entity
     end
   end
 
   def show
+    @exchange = Exchange.new
+    @exchanges = @order.exchanges.includes(:user)
   end
 
   private
 
   def set_order
-    @item = Item.find(params[:item_id])
-    return unless @item.user.id == current_user.id
+    @item = Item.find(params[:id])
+    @order = Order.find(params[:id])
+    # return unless @item.user.id == current_user.id || @order.item.user.id == current_user.id
 
-    redirect_to root_path
+    # redirect_to root_path
   end
 
   def order_params

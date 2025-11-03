@@ -1,0 +1,38 @@
+<%= render "shared/header" %>
+<div class='transaction'>
+ <div class='transaction-show'>
+  <div class='shipping-procedure'>
+   <div class='shipping-method'>
+     <h3 class='order-h3'>発送手続き</h3>
+     <!--a link>初めての方へ</a-->
+     <div class="order-red-btn">商品サイズの設定</div>
+     </div>
+   <div class='order-comment'>
+     <%@exchanges.each do |exchange|%>
+      <% if @item.user == current_user %>
+      <div class='order-comment-user'>
+       <%= image_tag current_user.image, width:"25",height:"25"%>
+       <%=exchange.user.nickname%>
+      <div class='order-comment-frame'>
+        <%=exchange.message%>
+      </div>
+      </div>
+      <%else%>
+       <%= image_tag current_user.image, width:"25",height:"25"%>
+       <%=exchange.user.nickname%>
+      <div class='order-comment-frame'>
+       <%=exchange.message%>
+      </div>
+      <%end%>
+     <%end%>
+    </div>
+    <div class='order-text'>
+      <%=form_with(model:[@order.item, @order, @exchange],local: true) do |f|%>
+       <%=f.text_field :message, class:'order-content'%>
+       <%= f.submit "送信", class:'order-submit'%>
+      <%end%>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>

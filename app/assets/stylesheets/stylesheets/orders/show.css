@@ -1,0 +1,70 @@
+.transaction{
+  width: 100vw;
+  height: 100vh;
+  background-color: #e9e5e5;
+
+}
+
+.transaction-show{
+  display: flex;
+  justify-content: center;
+}
+
+.shipping-procedure{
+  width: 600px;
+  height: 700px;
+  background-color: white;
+  margin-top: 30px;
+}
+
+
+.shipping-method{
+  padding: 23px;
+  margin-left: 80px;
+}
+
+.order-red-btn{
+  width: 360px;
+  height: 70px;
+  background-color: #ea352d;
+  font-weight: bold;
+  color: #FFF;
+  text-align: center;
+  margin-top: 30px 0;
+  padding: 18px;
+
+}
+
+.order-h3{}
+
+.order-comment{
+  padding: 23px;
+  border-top: 1px solid gray;
+}
+
+.order-comment-user{
+  margin-left: 26px;
+}
+
+.order-text{
+  display: flex;
+  padding: 25px;
+}
+
+.order-comment-frame{
+  width: 260px;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.order-content{
+  width: 360px;
+  height: 50px;
+}
+
+.order-submit{
+  width: 70px;
+  height: 50px;
+  margin: 25px 0 0 15px;
+}

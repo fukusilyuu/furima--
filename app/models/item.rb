@@ -21,6 +21,7 @@ class Item < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :replies
   has_one :order
+  has_many :exchanges
   has_many :likes, dependent: :destroy
 
   has_one_attached :image, dependent: :destroy
