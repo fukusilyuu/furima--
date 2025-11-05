@@ -7,5 +7,5 @@ class Exchange < ApplicationRecord
   belongs_to :order
 
   validates :message, presence: true
-  validates :shipping, presence: false
+  validates :shipping_id, presence: false
 end
