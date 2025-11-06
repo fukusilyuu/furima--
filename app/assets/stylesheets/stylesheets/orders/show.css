@@ -1,6 +1,6 @@
 .transaction{
   width: 100vw;
-  height: 170vh;
+  height: 190vh;
   background-color: #e9e5e5;
 
 }
@@ -12,14 +12,14 @@
 
 .shipping-procedure{
   width: 600px;
-  height: 1000px;
+  height: 1400px;
   background-color: white;
   margin-top: 30px;
 }
 
 
 .shipping-method{
-  padding: 23px;
+  padding: 25px;
   margin-left: 80px;
 }
 
@@ -38,7 +38,7 @@
 .order-h3{}
 
 .order-comment{
-  padding: 23px;  
+  padding: 25px;
 }
 
 .order-comment-user{
@@ -70,8 +70,7 @@
 
 
 .order-shipping{
-  padding: 23px;
-
+  padding: 25px;
   border-top: 1px solid gray;
 }
 
@@ -88,7 +87,6 @@
 
 .orders-border{
   padding: 0 50px;
-
 }
 
 .order-border{
@@ -100,4 +98,36 @@
   height: 40px;
   background-color: #f5f5f5;
   margin-left: 90px;
+}
+
+.check-order{
+  margin-top: 20px;
+  padding: 25px;
+}
+
+.check-items{
+  padding: 0 45px;
+}
+
+.check-image{
+  display: flex;
+  
+}
+
+.check-item{
+  margin-top: 20px;
+}
+
+.order-h4{}
+
+.explanation-box{
+  width: 420px;
+  padding: 12px;
+  border: 1px solid gray;
+  border-radius: 20px;
+
+}
+
+.genre-quality-box{
+  display: flex;
 }

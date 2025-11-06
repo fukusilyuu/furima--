@@ -25,7 +25,9 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @item = Item.new
     @exchange = Exchange.new
+    @items = Item.all
     @exchanges = @order.exchanges.includes(:user)
   end
 
