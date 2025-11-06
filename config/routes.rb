@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'items/:item_id/likes' => 'likes#create', as: 'item_likes'
   delete 'items/:item_id/likes' => 'likes#destroy', as: 'item_like'
 
+  get '/items/:item_id/orders/:order_id/exchanges' => 'exchanges#create'
+
   # get 'items/:item_id/comments/:comment_id/likes' => 'likes#create', as: 'item_comments_likes'
   # delete 'items/:item_id/likes' => 'likes#destroy', as: 'item_like'
   #
@@ -23,7 +25,9 @@ Rails.application.routes.draw do
   resources :relationships, only: %i[create destroy]
 
   resources :items do
-    resources :orders, only: %i[index create]
+    resources :orders, only: %i[index create show] do
+      resources :exchanges, only: %i[create destroy]
+    end
     resources :likes, only: %i[create destroy]
     resources :comments do
       resources :replies

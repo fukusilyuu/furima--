@@ -1,0 +1,118 @@
+<!--某フリマアプリ-->
+<%= render "shared/header" %>
+<div class='transaction'>
+ <div class='transaction-show'>
+  <div class='shipping-procedure'>
+   <div class='shipping-method'>
+     <!--a link>初めての方へ</a-->
+     <div class="order-red-btn">お互いに納得のいく取引をしましょう</div>
+     </div>
+   <div class='order-comment'>
+     <%@exchanges.each do |exchange|%>
+
+      <% if exchange.user == current_user %>
+      <div class='order-comment-user'>
+        <%= image_tag current_user.image, width:"25",height:"25"%>
+        <%=exchange.user.nickname%>
+       <div class='order-comment-frame'>
+         <%=exchange.message%>
+       </div>
+      </div>
+      <%else%>
+      <div class='order-comment-purchaser'>
+        <%= image_tag current_user.image, width:"25",height:"25"%>
+        <%=exchange.user.nickname%>
+       <div class='order-comment-frame'>
+        <%=exchange.message%>
+       </div>
+      </div>
+      <%end%>
+     <%end%>
+    </div>
+    <div class='order-text'>
+      <%=form_with(model:[@order.item, @order, @exchange],local: true) do |f|%>
+       <%=f.text_field :message, class:'order-content'%>
+       <%= f.submit "送信", class:'order-submit'%>
+      <%end%>
+    </div>
+    <div class='order-shipping'>
+     <div class='shipping'>
+      <h1 class='order-h1'>ダンボールのサイズをお選びください</h1>
+      <div class='orders-border'>
+        <div class='order-border'></div>
+      </div>
+        <%=form_with(model:[@order.item, @order, @exchange],local: true) do |f|%>
+         <%= f.collection_select(:shipping_id, Shipping.all, :id, :name, {}, {class:"order-select-box", id:"order-shipping"}) %>
+       <%end%>
+     </div>
+     <div class='check-order'>
+       <h1 class='order-h1'>再度取引情報ご確認ください</h1>
+      <div class='orders-border'>
+         <div class='order-border'></div>
+      </div>
+      <div class='check-items'>
+        <div class='check-image'>
+          <%= image_tag @order.item.image, width:"55",height:"55"%>
+         <div class='name-check-item'>
+          <div class='order-span'>
+           <h4 class='order-h4'>商品名</h4>
+           <div class='name-box'><%=@order.item.name%></div>
+           </div>
+         </div>
+        </div>
+        <br>
+        <div class='check-item'>
+         <h4 class='order-h4'>商品説明</h4>
+          <div class='explanation-box'><%=@order.item.explanation%></div>
+        </div>
+        <div class='check-item'>
+         <h4 class='order-h4'>商品の詳細</h4>
+         <div class='genre-quality-box'>
+          <div class='explanation-box'>
+           <div>
+            ジャンル: <%=@order.item.genre.name%>
+            <br>
+            商品の状態: <%=@order.item.quality.name%>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class='check-item'>
+         <h4 class='order-h4'>配送について</h4>
+         <div class='genre-quality-box'>
+          <div class='explanation-box'>
+           <div>
+            配送料の負担: <%=@order.item.payment.name%>
+            <br>
+            発送までの日数: <%=@order.item.days.name%>
+            <br>
+            発送元の地域: <%=@order.item.prefecture.name%>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class='check-item'>
+         <h4 class='order-h4'>販売価格</h4>
+        <div class='genre-quality-box'>
+         <div class='explanation-box'>
+          <div>
+            販売価格: <span id='order-price'><%=@order.item.price%></span>            
+            <br>
+          <%if current_user == @item.user%>
+          <div id='for-sellers-only' class='d hidden'>
+            販売手数料 (10%): <span id='sales-commission'></span>
+            <br>
+            販売利益: <span id='sales-profit'></span>
+          </div>
+          <%end%>
+          </div>
+         </div>
+        </div>
+       </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+<div></div>

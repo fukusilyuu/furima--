@@ -1,0 +1,151 @@
+.transaction{
+  width: 100vw;
+  background-color: #e9e5e5;
+
+}
+
+.transaction-show{
+  display: flex;
+  justify-content: center;
+}
+
+.shipping-procedure{
+  width: 600px;
+  background-color: white;
+  margin-top: 30px;
+}
+
+
+.shipping-method{
+  padding: 25px;
+  margin-left: 80px;
+}
+
+.order-red-btn{
+  width: 360px;
+  height: 70px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px 0;
+  border: 1px solid gray;
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.order-h3{}
+
+.order-comment{
+  padding: 25px;
+}
+
+.order-comment-user{
+  margin-top: 20px;
+}
+
+.order-comment-purchaser{
+  margin: 20px 0 0 296px;
+
+}
+
+.order-text{
+  display: flex;
+  padding: 25px;
+}
+
+.order-comment-frame{
+  width: 260px;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.order-content{
+  width: 360px;
+  height: 50px;
+}
+
+.order-submit{
+  width: 70px;
+  height: 50px;
+  margin: 25px 0 0 15px;
+}
+
+
+.order-shipping{
+  padding: 25px;
+  border-top: 1px solid gray;
+}
+
+.shipping{
+  display: block;
+}
+
+.order-h1{
+  font-size: 23px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+.orders-border{
+  padding: 0 50px;
+}
+
+.order-border{
+  border-bottom: 2px solid #ea352d;
+  margin-bottom: 30px;
+}
+
+.order-select-box{
+  height: 40px;
+  background-color: #f5f5f5;
+  margin-left: 90px;
+}
+
+.check-order{
+  margin-top: 20px;
+  padding: 25px;
+}
+
+.check-items{
+  padding: 0 45px;
+}
+
+.check-image{
+  display: flex;
+}
+
+.name-check-item{
+}
+
+.check-item{
+  margin-top: 20px;
+}
+
+.order-span{
+  margin-left: 26px;
+}
+
+.order-h4{
+  font-weight: bold;
+
+}
+
+.name-box{
+  width: 220px;
+  padding: 12px;
+  border: 1px solid gray;
+  border-radius: 20px;
+}
+
+.explanation-box{
+  width: 420px;
+  padding: 12px;
+  border: 1px solid gray;
+  border-radius: 20px;
+
+}
+
+.genre-quality-box{
+  display: flex;
+}

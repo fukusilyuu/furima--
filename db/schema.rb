@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_01_144446) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -60,6 +60,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_comments_on_item_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "exchanges", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "message", null: false
+    t.integer "shipping_id"
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_exchanges_on_item_id"
+    t.index ["order_id"], name: "index_exchanges_on_order_id"
+    t.index ["user_id"], name: "index_exchanges_on_user_id"
   end
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -126,6 +139,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "shippings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "nickname", default: "", null: false
     t.string "email", default: "", null: false
@@ -149,6 +168,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_11_090030) do
   add_foreign_key "addresses", "orders"
   add_foreign_key "comments", "items"
   add_foreign_key "comments", "users"
+  add_foreign_key "exchanges", "items"
+  add_foreign_key "exchanges", "orders"
+  add_foreign_key "exchanges", "users"
   add_foreign_key "items", "users"
   add_foreign_key "likes", "comments"
   add_foreign_key "likes", "items"

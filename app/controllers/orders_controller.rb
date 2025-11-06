@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: %i[index create]
-  before_action :set_order, only: %i[index create]
+  before_action :set_order, only: %i[index create show]
   require 'payjp'
   def index
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
@@ -17,18 +17,28 @@ class OrdersController < ApplicationController
       @order.save
       redirect_to root_path
     else
+      @item = @order.item
+      @orders = @item.orders
       gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render 'index', status: :unprocessable_entity
     end
   end
 
+  def show
+    @item = Item.new
+    @exchange = Exchange.new
+    @items = Item.all
+    @exchanges = @order.exchanges.includes(:user)
+  end
+
   private
 
   def set_order
-    @item = Item.find(params[:item_id])
-    return unless @item.user.id == current_user.id
+    @item = Item.find(params[:id])
+    @order = Order.find(params[:id])
+    # return unless @item.user.id == current_user.id || @order.item.user.id == current_user.id
 
-    redirect_to root_path
+    # redirect_to root_path
   end
 
   def order_params

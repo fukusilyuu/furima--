@@ -25,6 +25,8 @@ class ItemsController < ApplicationController
     @user = User.new
     @comment = Comment.new
     @reply = Reply.new
+    @user = User.new
+    @user = User.find(params[:id])
     @users = User.all
     @comments = @item.comments.includes(:user)
     @replies = @comment.replies.includes(:user)
