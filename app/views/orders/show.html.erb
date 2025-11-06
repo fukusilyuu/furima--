@@ -98,9 +98,13 @@
           <div>
             販売価格: <span id='order-price'><%=@order.item.price%></span>            
             <br>
+          <%if current_user == @item.user%>
+          <div id='for-sellers-only' class='d hidden'>
             販売手数料 (10%): <span id='sales-commission'></span>
             <br>
             販売利益: <span id='sales-profit'></span>
+          </div>
+          <%end%>
           </div>
          </div>
         </div>
