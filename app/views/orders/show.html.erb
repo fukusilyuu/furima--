@@ -4,28 +4,27 @@
  <div class='transaction-show'>
   <div class='shipping-procedure'>
    <div class='shipping-method'>
-     <h3 class='order-h3'>発送手続き</h3>
      <!--a link>初めての方へ</a-->
-     <div class="order-red-btn">商品サイズの設定</div>
+     <div class="order-red-btn">お互いに納得のいく取引をしましょう</div>
      </div>
    <div class='order-comment'>
      <%@exchanges.each do |exchange|%>
-     <div class='orders-border'>
-        <div class='order-border'></div>
-      </div>
-      <% if @item.user == current_user %>
+
+      <% if exchange.user == current_user %>
       <div class='order-comment-user'>
-       <%= image_tag current_user.image, width:"25",height:"25"%>
-       <%=exchange.user.nickname%>
-      <div class='order-comment-frame'>
-        <%=exchange.message%>
-      </div>
+        <%= image_tag current_user.image, width:"25",height:"25"%>
+        <%=exchange.user.nickname%>
+       <div class='order-comment-frame'>
+         <%=exchange.message%>
+       </div>
       </div>
       <%else%>
-       <%= image_tag current_user.image, width:"25",height:"25"%>
-       <%=exchange.user.nickname%>
-      <div class='order-comment-frame'>
-       <%=exchange.message%>
+      <div class='order-comment-purchaser'>
+        <%= image_tag current_user.image, width:"25",height:"25"%>
+        <%=exchange.user.nickname%>
+       <div class='order-comment-frame'>
+        <%=exchange.message%>
+       </div>
       </div>
       <%end%>
      <%end%>
@@ -54,9 +53,11 @@
       <div class='check-items'>
         <div class='check-image'>
           <%= image_tag @order.item.image, width:"55",height:"55"%>
-         <div class='check-item'>
-          <h4 class='order-h4'>商品名</h4>
-           <%=@order.item.name%>
+         <div class='name-check-item'>
+          <div class='order-span'>
+           <h4 class='order-h4'>商品名</h4>
+           <div class='name-box'><%=@order.item.name%></div>
+           </div>
          </div>
         </div>
         <br>

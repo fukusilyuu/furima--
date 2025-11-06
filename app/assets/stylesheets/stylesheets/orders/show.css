@@ -1,6 +1,5 @@
 .transaction{
   width: 100vw;
-  height: 190vh;
   background-color: #e9e5e5;
 
 }
@@ -12,7 +11,6 @@
 
 .shipping-procedure{
   width: 600px;
-  height: 1400px;
   background-color: white;
   margin-top: 30px;
 }
@@ -26,13 +24,12 @@
 .order-red-btn{
   width: 360px;
   height: 70px;
-  background-color: #ea352d;
   font-weight: bold;
-  color: #FFF;
   text-align: center;
   margin-top: 20px 0;
+  border: 1px solid gray;
   padding: 18px;
-
+  border-radius: 22px;
 }
 
 .order-h3{}
@@ -42,7 +39,12 @@
 }
 
 .order-comment-user{
-  margin-left: 26px;
+  margin-top: 20px;
+}
+
+.order-comment-purchaser{
+  margin: 20px 0 0 296px;
+
 }
 
 .order-text{
@@ -111,14 +113,30 @@
 
 .check-image{
   display: flex;
-  
+}
+
+.name-check-item{
 }
 
 .check-item{
   margin-top: 20px;
 }
 
-.order-h4{}
+.order-span{
+  margin-left: 26px;
+}
+
+.order-h4{
+  font-weight: bold;
+
+}
+
+.name-box{
+  width: 220px;
+  padding: 12px;
+  border: 1px solid gray;
+  border-radius: 20px;
+}
 
 .explanation-box{
   width: 420px;
