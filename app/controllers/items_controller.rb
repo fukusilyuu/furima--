@@ -4,8 +4,9 @@ class ItemsController < ApplicationController
   before_action :set_edit_destroy, only: %i[edit destroy]
   def index
     @items = Item.includes(:user).order('created_at DESC')
-    # @user = User.find(params[:id])
     @users = User.all
+    @q = Item.ransack(params[:q])
+    @items = @q.result
   end
 
   def new

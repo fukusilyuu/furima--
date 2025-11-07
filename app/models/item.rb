@@ -29,4 +29,8 @@ class Item < ApplicationRecord
   def liked_by?(user)
     likes.where(user_id: user.id).exists?
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "days_id", "explanation", "genre_id", "id", "id_value", "name", "payment_id", "prefecture_id", "price", "quality_id", "updated_at", "user_id"]
+  end
 end
