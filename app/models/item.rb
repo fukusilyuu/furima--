@@ -30,7 +30,14 @@ class Item < ApplicationRecord
     likes.where(user_id: user.id).exists?
   end
 
+  # Ransack検索で許可するカラム一覧
   def self.ransackable_attributes(auth_object = nil)
-    ["created_at", "days_id", "explanation", "genre_id", "id", "id_value", "name", "payment_id", "prefecture_id", "price", "quality_id", "updated_at", "user_id"]
+    # %w[id name price explanation created_at updated_at genre_id user_id]
+    %w[name price explanation genre_id quality_id payment_id days_id prefecture_id created_at updated_at]
+  end
+
+  # 関連モデルも検索対象にする場合（例: category.name_cont など）
+  def self.ransackable_associations(auth_object = nil)
+    %w[genre quality payment prefecture days user]
   end
 end

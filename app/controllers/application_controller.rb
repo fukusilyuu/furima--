@@ -12,5 +12,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set
+    @q = Item.ransack(params[:q])
+    @items = @q.result(distinct: true).includes(:genre)
+    @genres = Genre.all
   end
 end
