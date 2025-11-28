@@ -1,8 +1,8 @@
-// app/javascript/controllers/hello_controller.js
+// ❌ Application を import してはいけない
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    console.log("Hello, Stimulus!", this.element)
+    console.log("search_controller connected!!");
   }
 }

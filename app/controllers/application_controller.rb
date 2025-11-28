@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   skip_before_action :verify_authenticity_token
-  before_action :set
+  before_action :set_search
 
   protected
 
@@ -11,9 +11,8 @@ class ApplicationController < ActionController::Base
                                                lastname_katakana birth_date])
   end
 
-  def set
+  def set_search
     @q = Item.ransack(params[:q])
-    @items = @q.result(distinct: true).includes(:genre)
-    @genres = Genre.all
+    @items = @q.result.limit(5)
   end
 end

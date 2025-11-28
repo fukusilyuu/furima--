@@ -1,0 +1,3 @@
+<%= turbo_stream.replace "search-dropdown" do %>
+  <%= render partial: "search_suggestions", locals: { items: @items } %>
+<% end %>

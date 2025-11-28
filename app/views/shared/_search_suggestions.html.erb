@@ -1,0 +1,11 @@
+<% if items.present? %>
+  <ul class="suggestion-list">
+    <% items.each do |item| %>
+      <li class="suggestion-item">
+        <%= link_to item.name, item_path(item) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <div class="no-result">該当する商品はありません</div>
+<% end %>

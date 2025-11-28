@@ -1,3 +1,6 @@
+<div data-controller="price">
+
+
 <div class="items-sell-contents">
   <header class="items-sell-header">
     <%= link_to image_tag('images/furima-logo-color.png' , size: '185x50'), "/" %>
@@ -99,18 +102,18 @@
             <span class="indispensable">必須</span>
           </div>
           <span class="sell-yen">¥</span>
-          <%= f.text_field :price, class:"price-input", id:"item-price", placeholder:"例）300" %>
+          <%= f.text_field :price, class: "price-input", id: "item-price", placeholder: "例）300", data: { price_target: "input" } %>
         </div>
         <div class="price-content">
           <span>販売手数料 (10%)</span>
           <span>
-            <span id='add-tax-price'></span>円
+            <span data-price-target="addtax" id="add-tax-price"></span>円
           </span>
         </div>
         <div class="price-content">
           <span>販売利益</span>
           <span>
-            <span id='profit'></span>円
+            <span data-price-target="profit" id="profit"></span>円
           </span>
         </div>
       </div>

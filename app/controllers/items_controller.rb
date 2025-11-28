@@ -6,7 +6,18 @@ class ItemsController < ApplicationController
     @items = Item.includes(:user).order('created_at DESC')
     @users = User.all
     @q = Item.ransack(params[:q])
-    @items = @q.result
+    @items = @q.result.limit(5)
+
+    # Ajax / Turbo Streams の場合は部分テンプレートのみ返す
+    return unless request.headers['Accept']&.include?('text/vnd.turbo-stream.html')
+
+    render partial: 'shared/search_suggestions', locals: { items: @items }
+    nil
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render partial: 'shared/search_suggestions', locals: { items: @items } }
+    end
   end
 
   def new
@@ -26,7 +37,6 @@ class ItemsController < ApplicationController
     @user = User.new
     @comment = Comment.new
     @reply = Reply.new
-    @user = User.new
     @user = User.find(params[:id])
     @users = User.all
     @comments = @item.comments.includes(:user)
@@ -51,6 +61,11 @@ class ItemsController < ApplicationController
     return unless @item.destroy
 
     redirect_to root_path
+  end
+
+  def search
+    items = Item.where('name LIKE ?', "%#{params[:keyword]}%")
+    render json: items.select(:id, :name)
   end
 
   private
