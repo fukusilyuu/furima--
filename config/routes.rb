@@ -12,11 +12,7 @@ Rails.application.routes.draw do
 
   get '/items/:item_id/orders/:order_id/exchanges' => 'exchanges#create'
 
-  # get 'items/:item_id/comments/:comment_id/likes' => 'likes#create', as: 'item_comments_likes'
-  # delete 'items/:item_id/likes' => 'likes#destroy', as: 'item_like'
-  #
-  # get 'items/item_id/comments/comment_id/replies/:id' => 'replies#edit'
-  # post 'items/item_id/comments/comment_id/replies/:id/edit' => 'replies#update'
+  get 'items/search', to: 'items#search'
 
   resources :users do
     resources :relationships, only: %i[create destroy]

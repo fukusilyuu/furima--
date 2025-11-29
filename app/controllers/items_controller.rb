@@ -7,17 +7,6 @@ class ItemsController < ApplicationController
     @users = User.all
     @q = Item.ransack(params[:q])
     @items = @q.result.limit(5)
-
-    # Ajax / Turbo Streams の場合は部分テンプレートのみ返す
-    return unless request.headers['Accept']&.include?('text/vnd.turbo-stream.html')
-
-    render partial: 'shared/search_suggestions', locals: { items: @items }
-    nil
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream { render partial: 'shared/search_suggestions', locals: { items: @items } }
-    end
   end
 
   def new
@@ -64,8 +53,13 @@ class ItemsController < ApplicationController
   end
 
   def search
-    items = Item.where('name LIKE ?', "%#{params[:keyword]}%")
-    render json: items.select(:id, :name)
+    keyword = params[:keyword]
+    @items = if keyword.present?
+               Item.where('name LIKE ?', "%#{keyword}%")
+             else
+               []
+             end
+    render json: @items.pluck(:name)
   end
 
   private

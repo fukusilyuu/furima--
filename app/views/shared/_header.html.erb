@@ -1,33 +1,22 @@
 <%# CSS・・・assets/stylesheets/shared/header.css %>
 <div data-controller="hello"></div>
+<div data-controller="search">
 
 <header class='top-page-header'>
 
   <div class='search-bar-contents'>
     <%= link_to image_tag("images/furima-logo-color.png", class:"furima-icon"), "/" %>
-
-<%= search_form_for @q,
-      url: items_path,
-      method: :get,
-      html: {
-        class: "search-form",
-        data: { controller: "search", action: "input->search#submit" }
-      } do |f| %>
-
-  <%= f.search_field :name_cont,
-  class: "input-box",
-  placeholder: "キーワードまたはユーザー名で探す",
-  data: { search_target: "input" } %>
-
-  <div id="search-dropdown"
-     class="search-dropdown hidden"
-     data-search-target="dropdown">
-</div>
+<%= search_form_for @q, url: items_search_path, html: { id: "item_search", class: "search-form", data: { controller: "search" } } do |f| %>
+ <div class="search-area">
+  <%= f.search_field :name_cont, class: "input-box-search", placeholder: "キーワードまたはユーザー名で探す", data: { action: "keyup->search#run", search_target: "keyword" } %>
+   <div id="search-results" data-search-target="results"></div>
+ </div>
 
 
   <button class="search-button" type="submit">
     <%= image_tag "images/search.png", class: "search-icon" %>
   </button>
+  
 
 <% end %>
 

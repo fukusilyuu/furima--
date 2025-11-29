@@ -10,8 +10,7 @@
 .genre-boxes{
   display: block;
 }
-.genres{
-}
+
 
 
 .top-page-header {
@@ -21,8 +20,8 @@
   flex-direction: column;
 }
 
-.header-background{
-  
+.search-area{
+  display: block;
 }
 .search-bar-contents {
   display: flex;
@@ -44,10 +43,16 @@
   margin-bottom: 5px;
 }
 
-.search-form>.input-box {
-  width: 100%;
-  height: 5vh;
-  padding-left: 10px;
+.input-box-search {
+  width: 700px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.search-result{
+  display: block;
 }
 
 .search-button {
