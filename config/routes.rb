@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   get '/items/:item_id/orders/:order_id/exchanges' => 'exchanges#create'
 
-  get 'items/search', to: 'items#search'
+  # get 'items/search_names', to: 'items#search_names'
 
   resources :users do
     resources :relationships, only: %i[create destroy]
@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :items do
     collection do
-      get 'search'
+      get :search_names
     end
     resources :orders, only: %i[index create show] do
       resources :exchanges, only: %i[create destroy]

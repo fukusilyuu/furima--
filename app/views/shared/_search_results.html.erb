@@ -1,0 +1,10 @@
+<!-- app/views/items/_search_results.html.erb -->
+<% items.each do |item| %>
+  <div>
+    <%= item.name %>
+  </div>
+<% end %>
+
+<% if items.empty? %>
+  <div>該当する商品はありません</div>
+<% end %>

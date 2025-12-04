@@ -54,12 +54,22 @@ class ItemsController < ApplicationController
 
   def search
     keyword = params[:keyword]
+
+    @names = Item.where('name LIKE ?', "%#{keyword}%").limit(10).pluck(:name)
+
+    render json: @names
+  end
+
+  def search_names
+    keyword = params[:keyword].to_s.strip
+
     @items = if keyword.present?
                Item.where('name LIKE ?', "%#{keyword}%")
              else
-               []
+               Item.none
              end
-    render json: @items.pluck(:name)
+
+    render partial: 'items/search_results', locals: { items: @items }
   end
 
   private
