@@ -2,18 +2,34 @@
   box-sizing: border-box;
 }
 
+.search-genre{
+  width: 180px;
+  margin-left: 1px;
+}
+
+.genre-boxes{
+  display: block;
+}
+
+
+
 .top-page-header {
-  width: 100vw;
+  width:100vw;
   padding: 2vh 15vw;
   display: flex;
   flex-direction: column;
 }
 
+.search-area{
+  display: block;
+}
 .search-bar-contents {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+
 
 .furima-icon {
   width: 10vw;
@@ -27,10 +43,16 @@
   margin-bottom: 5px;
 }
 
-.search-form>.input-box {
-  width: 100%;
-  height: 5vh;
-  padding-left: 10px;
+.input-box-search {
+  width: 700px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.search-result{
+  display: block;
 }
 
 .search-button {
@@ -51,19 +73,34 @@
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-  padding: 1vh 0;
 }
 
 .lists-left {
   display: flex;
   min-width: 200px;
+  padding: 1vh 0;
 
 }
 
+
+
 .category-list {
+  display: flex;
   text-decoration: none;
   margin-right: 3vw;
   color: #333333;
+}
+
+.category-box{
+  display: block;
+}
+
+.search-form{
+  display: flex;
+}
+
+.search-price-input{
+  width: 70px;
 }
 
 .brand-list {
@@ -101,4 +138,104 @@
 .sign-up {
   text-decoration: none;
   color: #333333;
+}
+
+.category-box .genre-check {
+  display: inline-block;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+.category-box{
+  background-color: #fff;            /* 白背景 */
+  width: 100%;                        /* 横幅を少し狭めて中央寄せ */
+  height: 500px;                     
+  margin: 20px auto;                 /* 上下20px、左右中央寄せ */
+  padding: 15px 25px;                /* 内側余白 */
+  border-radius: 10px;               /* 角を丸く */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 少し影をつけて浮かせる */
+  box-sizing: border-box;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;         /* 横に並びきらないとき折り返し */
+  gap: 12px 20px;          /* 項目の間隔 */
+  align-items: center;
+  padding: 10px;
+}
+
+.checkbox-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.category-name{
+  font-size: 22px;
+  margin-left: 1px;
+}
+
+.size-border{
+  color: #00bcd4;
+}
+
+.price-search{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* チェックボックスのサイズ */
+.genre-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.price-input{
+  width: 80px;
+  padding: 4px;
+  margin: 0 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+}
+
+
+.search-btn {
+  background-color: #00bcd4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+
+.genre-list label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: #333;
+  margin-right: 10px;
+  white-space: nowrap;         /* 折り返し防止 */
+}
+
+
+.search-btn:hover {
+  background-color: #0097a7;
+}
+
+#search-result{
+  width: 30%;
+}
+
+.child{
+  margin: 5px;
+  border: 1px solid #dedede;
+  background-color: #F4F4F4;
+  padding: 5px;
+  font-size: 12px;
 }

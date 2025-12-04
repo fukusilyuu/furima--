@@ -1,3 +1,6 @@
+<div data-controller="clickviews">
+<div data-controller="ten">
+
 <%= render "shared/header" %>
 
 <%# 商品の概要 %>
@@ -7,7 +10,7 @@
     <h2 class="name">
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
-              <% @users.each do |user| %>
+      <% @users.each do |user| %>
              <% next if @item.user == current_user %>
              <% next if user == current_user %>
            <% if user.followed_by?(current_user) %>
@@ -47,7 +50,7 @@
     <% end %>
    <%end%>
    <% if @item.order&.user == current_user || @item.user == current_user%>
-    <%= link_to '取引ページ',item_order_path(@item), class: "item-red-btn" %>
+    <%#= link_to '取引ページ',item_order_path(@item), class: "item-red-btn" %>
    <%else%>
    <%end%>
 
@@ -64,7 +67,7 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= link_to @item.user.nickname, user_path %>(ユーザー名を押してユーザーマイページに移動)</td>
+          <td class="detail-value"><%= link_to @item.user.nickname, user_path(:id) %>(ユーザー名を押してユーザーマイページに移動)</td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
@@ -115,12 +118,13 @@
         <%= image_tag "images/comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>   
           <span>コメントする<span>
       </button>
-      <div class="comment-btn2" id='comment-ran'>
+      <button class="comment-btn2" data-clickviews-target="toggle"
+          data-action="click->clickviews#toggle">
            <span id="comment-ran">コメント欄</span>
-      </div>
+      </button>
       <%end%>
      <%end%>
-      <ul class="comments hidden" id='comments'>
+      <ul class="comments" id="comments" data-clickviews-target="body" class="hidden" style="display:none;">
        <%@item.comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
@@ -128,9 +132,10 @@
            <%= l comment.created_at, class:"comment-created-at"%>
            <div class="ten-ran">
             <div class="comment-show">
-              <span id='tenran'>:</span>
+              <span data-ten-target=""
+          data-action="click->ten#ten">:</span>
             </div>
-             <ul class="show-lists hidden" id='tenshow'>
+             <ul class="show-lists" data-ten-target="show" class="hidden" style="display:none;">
               <li class='show-list'>
                <% if user_signed_in? && comment.user == current_user %>
                 <%=link_to "編集", edit_item_comment_path(@item,comment), data: { turbo_frame: "modal" }, class:"show-list" %>
@@ -141,7 +146,7 @@
            </div>
            <br>
            <li class='comment-text2'><%= comment.text %></li>
-           <div class="reply hidden" id='reply-show'>
+           <div class="reply" data-clickviews-target="reply" class="hidden" style="display:none;">
              <div class='reply-context'>
            <%=form_with model: Reply.new, url: item_comment_replies_path(@item, comment), local: true do |f|%>
            <%#= render 'shared/error_messages', model: f.object wh%>
@@ -150,16 +155,17 @@
             <%#end%>
            </div>
            <%comment.replies.each do |reply|%>
-          <div class="reply-lists">
+          <div class="reply-lists" >
             <div class="reply-list">
              <div class='ro'>
               <%=reply.user.nickname%> =>
              <div class='reply-context'><%=reply.context %></div>  
              <div class="ten-ran">
             <div class="comment-show">
-              <span id='tenran'>:</span>
+              <span data-ten-target="tenreply"
+          data-action="click->ten#tenreply">:</span>
             </div>
-             <ul class="show-lists hidden" id='tenshow'>
+             <ul class="show-lists" data-ten-target="showreply" class="hidden" style="display:none;">
               <li class='show-list'>
                <% if user_signed_in? && reply.user == current_user %>
                 <%=link_to "編集", edit_item_comment_reply_path(@item,comment,reply), data: { turbo_frame: "modal" }, class:"show-list" %>
@@ -172,7 +178,7 @@
             </div>
              <br>
              <div class="reply-images">
-               <%=image_tag "images/comment.png",class:"reply-image",width:"15",height:"20", id:'replies'%>
+               <%=image_tag "images/comment.png",class:"reply-image",width:"15",height:"20", data: { clickviews_target: "ten", action: "click->clickviews#ten" }%>
          <!--span id='star-counts'>0</span-->
                <div id="like-btn"><%= reply.id %>
                 <% if user_signed_in? %>
@@ -200,7 +206,7 @@
        </div>
            <br>
              <li class="comment-images">
-         <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20", id:'reply-ran'%>
+         <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20",data: { clickviews_target: "change", action: "click->clickviews#change" } %>
          <span id='star-counts'>0</span>
         <div id="like-btn<%= comment.id %>">
           <% if user_signed_in? %><%#&& comment.liked_by?(current_user)%>

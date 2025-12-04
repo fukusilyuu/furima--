@@ -1,0 +1,9 @@
+<% if items.any? %>
+  <% items.each do |item| %>
+    <div class="search-item">
+      <%= item.name %>
+    </div>
+  <% end %>
+<% else %>
+  <div>一致する商品はありません</div>
+<% end %>

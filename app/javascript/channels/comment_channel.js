@@ -19,20 +19,6 @@ if(location.pathname.match(/\/items\/\d/)){
       },
   
       received(data) {
-        const html = 
-        <li class="comment-list">
-         <li class="comment-list">
-           ${comment.user.nickname}
-           <li class="comment-created-at">${ comment.created_at}</li>
-           <br>
-           ${comment.text}
-           </br>
-         </li>
-        </li>
-        const comments = document.getElementById("comments")
-        comments.insertAdjacentHTML('beforeend', html)
-        const commentForm = document.getElementById("comment-form")
-        commentForm.reset();
       }
     })
   }

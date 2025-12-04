@@ -1,29 +1,105 @@
 <%# CSS・・・assets/stylesheets/shared/header.css %>
+<!--div data-controller="hello"></div-->
+<div data-controller="search">
+<div data-controller="clickviews">
 
 <header class='top-page-header'>
+
   <div class='search-bar-contents'>
     <%= link_to image_tag("images/furima-logo-color.png", class:"furima-icon"), "/" %>
-    <form class="search-form" action="#">
-      <input class='input-box' placeholder='キーワードから探す'>
-      <button class="search-button">
-        <%= image_tag "images/search.png", class:"search-icon" %>
-      </button>
-    </form>
-  </div>
+<%= search_form_for @q, url: search_names_items_path, method: :get, html: {
+  id: "item_search",
+  data: {
+  controller: "search",
+  turbo: false
+}
+
+} do |f| %>
+<div class='search-area'>
+  <%= f.search_field :name_cont,
+        name: "keyword",
+        class: "input-box-search",
+        placeholder: "キーワードまたはユーザー名で探す",
+        data: {
+          action: "input.search->run",
+          search_target: "keyword",
+          turbo: false
+        },
+        autocomplete: "off" %>
+
+  <div id="search-results" data-search-target="results"></div>
+
+
+   <button class="search-button" 
+        data-action="click.search->run"
+        data-search-target="button"
+        data-turbo="false">
+</div>
+
+  <% end %>
+
+</div>
   <div class='nav'>
     <ul class='lists-left'>
-      <li><%= link_to 'カテゴリー', "#", class: "category-list" %></li>
-      <li><%= link_to 'ブランド', "#", class: "brand-list" %></li>
+      <li><%= link_to 'カテゴリー', "#", class: "category-list", data: { clickviews_target: "category", action: "click->clickviews#category" } %></li>
+      <li><%= link_to 'ブランド', "#", class: "brand-list" %></li>  
     </ul>
     <ul class='lists-right'>
-      <% if user_signed_in? %>
+     <% if user_signed_in? %>
       <li><%#=image_tag current_user.image,width:"45",height:"45"%></li>
       <li><%= link_to current_user.nickname, user_path(current_user), class: "user-nickname"%> </li>
       <li><%= link_to 'ログアウト', destroy_user_session_path, data: {turbo_method: :delete}, class: "logout" %></li>
-<%else%>
+     <%else%>
       <li><%= link_to 'ログイン', new_user_session_path, class: "login" %></li>
       <li><%= link_to '新規登録', new_user_registration_path, class: "sign-up" %></li>
-      <%end%>
+     <%end%>
     </ul>
   </div>
+<div class='category-box' data-clickviews-target="off" class="hidden" style="display:none;">
+ <%= search_form_for @q, url: items_path, method: :get, html: { class: "search-form" } do |f| %>
+ <div class="category-list">
+  <div>
+  <p class='category-name'><span class='size-border'>ー</span>ジャンル</p>
+  <%= f.collection_check_boxes(:genre_id_in, Genre.all, :id, :name) do |g| %>
+   <span class="checkbox-item"><%= g.check_box %> <%= g.text %></span>
+  <% end %>
+  </div>
+
+  <div>
+  <p class='category-name'><span class='size-border'>ー</span>品質</p>
+   <%= f.collection_check_boxes(:quality_id_eq_any, Quality.all, :id, :name) do |q| %>
+    <span class="checkbox-item"><%= q.check_box %> <%= q.text %></span>
+   <%end%>
+  </div>
+
+  <div>
+   <p class='category-name'><span class='size-border'>ー</span>送料</p>
+   <%= f.collection_check_boxes(:payment_id_eq_any, Payment.all, :id, :name) do |p| %>
+    <span class="checkbox-item"><%= p.check_box %> <%= p.text %></span>
+   <%end%>
+  </div>
+
+  <div>
+   <p class='category-name'><span class='size-border'>ー</span>都道府県</p>
+   <%= f.collection_check_boxes(:prefecture_id_eq_any, Prefecture.all, :id, :name) do |k| %>
+    <span class="checkbox-item"><%= k.check_box %> <%= k.text %></span>
+   <%end%>
+  </div>
+
+  <div>
+   <p class='category-name'><span class='size-border'>ー</span>日数</p>
+   <%= f.collection_check_boxes(:days_id_eq_any, Days.all, :id, :name) do |d| %>
+    <span class="checkbox-item"><%= d.check_box %> <%= d.text %></span>
+   <%end%>
+  </div>
+
+  <div class="price-search">
+    <%= f.number_field :price_gteq, placeholder: "¥最小", class: "price-input" %>
+    <%= f.number_field :price_lteq, placeholder: "¥最大", class: "price-input" %>
+  </div>
+
+  <%= f.submit "検索", class: "search-btn" %>
+  </div>
+  <%end%>
+</div>
 </header>

@@ -4,8 +4,9 @@ class ItemsController < ApplicationController
   before_action :set_edit_destroy, only: %i[edit destroy]
   def index
     @items = Item.includes(:user).order('created_at DESC')
-    # @user = User.find(params[:id])
     @users = User.all
+    @q = Item.ransack(params[:q])
+    @items = @q.result.limit(5)
   end
 
   def new
@@ -25,7 +26,6 @@ class ItemsController < ApplicationController
     @user = User.new
     @comment = Comment.new
     @reply = Reply.new
-    @user = User.new
     @user = User.find(params[:id])
     @users = User.all
     @comments = @item.comments.includes(:user)
@@ -50,6 +50,26 @@ class ItemsController < ApplicationController
     return unless @item.destroy
 
     redirect_to root_path
+  end
+
+  def search
+    keyword = params[:keyword]
+
+    @names = Item.where('name LIKE ?', "%#{keyword}%").limit(10).pluck(:name)
+
+    render json: @names
+  end
+
+  def search_names
+    keyword = params[:keyword].to_s.strip
+
+    @items = if keyword.present?
+               Item.where('name LIKE ?', "%#{keyword}%")
+             else
+               Item.none
+             end
+
+    render partial: 'items/search_results', locals: { items: @items }
   end
 
   private

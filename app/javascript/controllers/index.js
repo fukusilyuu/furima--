@@ -1,7 +1,13 @@
-import { Application } from "@hotwired/stimulus"
+// app/javascript/controllers/index.js
+import { application } from "./application"
 
-const application = Application.start()
+// require.context を使って自動でコントローラを読み込む
+const context = require.context(".", true, /\.js$/)
 
-// 各controllerを明示的に登録
-//import CommentController from "./comment_controller"
-//application.register("comment", CommentController)
+// 自分自身を除外して application.js で読み込む
+context.keys().forEach((key) => {
+  if (key === "./index.js") return
+  const controller = context(key).default
+  const name = key.replace("./", "").replace(".js", "")
+  application.register(name, controller)
+})

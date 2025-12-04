@@ -12,11 +12,7 @@ Rails.application.routes.draw do
 
   get '/items/:item_id/orders/:order_id/exchanges' => 'exchanges#create'
 
-  # get 'items/:item_id/comments/:comment_id/likes' => 'likes#create', as: 'item_comments_likes'
-  # delete 'items/:item_id/likes' => 'likes#destroy', as: 'item_like'
-  #
-  # get 'items/item_id/comments/comment_id/replies/:id' => 'replies#edit'
-  # post 'items/item_id/comments/comment_id/replies/:id/edit' => 'replies#update'
+  # get 'items/search_names', to: 'items#search_names'
 
   resources :users do
     resources :relationships, only: %i[create destroy]
@@ -25,13 +21,15 @@ Rails.application.routes.draw do
   resources :relationships, only: %i[create destroy]
 
   resources :items do
+    collection do
+      get :search_names
+    end
     resources :orders, only: %i[index create show] do
       resources :exchanges, only: %i[create destroy]
     end
     resources :likes, only: %i[create destroy]
     resources :comments do
       resources :replies
-      # resources :likes, only: %i[create destroy]
     end
   end
 end
