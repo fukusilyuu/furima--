@@ -22,7 +22,7 @@ class Item < ApplicationRecord
   has_many :replies
   has_one :order
   has_many :exchanges
-  has_many :likes, dependent: :destroy
+  has_many :likes, as: :likeable, dependent: :destroy
 
   has_one_attached :image, dependent: :destroy
 

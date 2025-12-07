@@ -10,16 +10,7 @@
     <h2 class="name">
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
-      <% @users.each do |user| %>
-             <% next if @item.user == current_user %>
-             <% next if user == current_user %>
-           <% if user.followed_by?(current_user) %>
-              <% relationship = current_user.active_relationships.find_by(followed_id: user.id) %>
-              <%= link_to "フォロー中", user_relationship_path(user,relationship), data: { turbo_method: :delete }, class: "item-relationship" %>
-           <%else%>
-              <%= link_to "フォローする", user_relationships_path(user), data: { turbo_method: :post }, class: "item-relationship" %>
-           <% end %>
-        <% end %>
+      
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image, class:"item-box-img" %>
@@ -181,12 +172,13 @@
                <%=image_tag "images/comment.png",class:"reply-image",width:"15",height:"20", data: { clickviews_target: "ten", action: "click->clickviews#ten" }%>
          <!--span id='star-counts'>0</span-->
                <div id="like-btn"><%= reply.id %>
-                <% if user_signed_in? %>
-                <%#&& reply.liked_by?(current_user)%>
-                 <%=link_to "❤️", item_likes_path(reply.id), data: { turbo_method: :delete }, class: "reply-likes" %>
-                <% else %>
-                 <%=link_to "♡", item_likes_path(reply.id), data: { turbo_method: :post }, class: "reply-likes" %>
-                <% end %>
+                <% if current_user != reply %>
+                 <% if user_signed_in? && reply.liked_by?(current_user)%>
+                  <%=link_to "❤️", item_comment_reply_like_path(@item.id,comment.id,reply.id, :id), data: { turbo_method: :delete }, class: "reply-likes" %>
+                 <% else %>
+                  <%=link_to "♡", item_comment_reply_likes_path(@item,comment,reply), data: { turbo_method: :post }, class: "reply-likes" %>
+                 <% end %>
+              <%end%>
               </div>
             </div>
             </li>
@@ -207,13 +199,16 @@
            <br>
              <li class="comment-images">
          <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20",data: { clickviews_target: "change", action: "click->clickviews#change" } %>
-         <span id='star-counts'>0</span>
+         <span id='star-counts'>1</span>
         <div id="like-btn<%= comment.id %>">
-          <% if user_signed_in? %><%#&& comment.liked_by?(current_user)%>
-           <%=link_to "❤️", item_like_path(comment.id), data: { turbo_method: :delete }, class: "comment-likes" %>
+          <% if current_user != comment %>
+           <% if user_signed_in? && comment.liked_by?(current_user)%>
+           <%=link_to "❤️", item_comment_like_path(@item.id,comment.id,:id), data: { turbo_method: :delete }, class: "comment-likes" %>
           <% else %>
-            <%=link_to "♡", item_likes_path(comment.id), data: { turbo_method: :post }, class: "comment-likes" %>
+            <%=link_to "♡", item_comment_likes_path(@item,comment), data: { turbo_method: :post }, class: "comment-likes" %>
           <% end %>
+          <%#end%>
+          <%end%>
         </div>
        </li>
        </li>

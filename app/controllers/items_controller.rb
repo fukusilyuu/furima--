@@ -60,17 +60,7 @@ class ItemsController < ApplicationController
     render json: @names
   end
 
-  def search_names
-    keyword = params[:keyword].to_s.strip
-
-    @items = if keyword.present?
-               Item.where('name LIKE ?', "%#{keyword}%")
-             else
-               Item.none
-             end
-
-    render partial: 'items/search_results', locals: { items: @items }
-  end
+  
 
   private
 
