@@ -1,9 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["ten", "show", "tenreply", "showreply"]
+  static targets = ["on", "show", "tenreply", "showreply"]
   
-  ten() {
+  on() {
     const show = this.showTarget
 
     // hidden クラスか display:none で判別

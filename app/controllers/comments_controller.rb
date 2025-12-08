@@ -35,7 +35,7 @@ class CommentsController < ApplicationController
       if @comment.update(comment_params)
         redirect_to @item, notice: 'コメントを編集しました'
       else
-        redirect_to @item, alert: 'コメントの編集に失敗しました'
+        render 'items/show', status: :unprocessable_entity
       end
     else
       redirect_to @item, alert: '編集権限がありません'
@@ -43,8 +43,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if @comment.user == current_user
-      @comment.destroy
+    return unless @comment.user == current_user
+
+    if @comment.destroy
       redirect_to @item, notice: 'コメントを削除しました'
     else
       redirect_to @item, alert: '他のユーザーのコメントは削除できません'

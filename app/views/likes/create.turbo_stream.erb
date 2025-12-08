@@ -1,5 +1,3 @@
-<%= turbo_stream.replace "comment-like-#{@likeable.id}" do %>
-  <%= render "likes/comment_like",
-    item: @likeable.item,
-    comment: @likeable %>
+<%= turbo_stream.replace "like_#{dom_id(@likeable)}" do %>
+  <%= render "likes/button", likeable: @likeable %>
 <% end %>

@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :relationships, only: %i[create destroy]
 
   resources :items do
-    resources :likes, only: %i[create destroy]
+    resource :likes, only: %i[create destroy]
     collection do
       get :search_names
     end
@@ -29,10 +29,10 @@ Rails.application.routes.draw do
       resources :exchanges, only: %i[create destroy]
     end
     resources :comments do
-      resources :likes, only: %i[create destroy]
+      resource :likes, only: %i[create destroy]
 
       resources :replies do
-        resources :likes, only: %i[create destroy]
+        resource :likes, only: %i[create destroy]
       end
     end
   end

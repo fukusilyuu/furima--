@@ -1,0 +1,19 @@
+<div id="like_<%= dom_id(likeable) %>">
+  <span><%= likeable.likes.count %></span>
+
+  <% if likeable.is_a?(Item) %>
+   <% path = item_likes_path(likeable) %>
+  <% elsif likeable.is_a?(Comment) %>
+   <% path = item_comment_likes_path(likeable.item, likeable) %>
+  <% elsif likeable.is_a?(Reply) %>
+   <% path = item_comment_reply_likes_path(likeable.comment.item, likeable.comment, likeable ) %>
+  <% end %>
+
+ <% if user_signed_in? && likeable.liked_by?(current_user) %>
+    <%= link_to "❤️", path, data: { turbo_method: :delete }, class: "like-button" %>
+  <% else %>
+    <%= link_to "♡", path, data: { turbo_method: :post }, class: "like-button" %>
+  <% end %>
+  
+
+</div>

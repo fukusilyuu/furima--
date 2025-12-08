@@ -39,9 +39,11 @@ class RepliesController < ApplicationController
       @reply.destroy
       redirect_to @item, notice: 'コメントを削除しました'
     else
-      render 'items/show', status: :unprocessable_entity
-
+      redirect_to @item, alert: '他のユーザーのコメントは削除できません'
     end
+    return if @item.comments.nil?
+
+    redirect_to item_path
   end
 
   private
