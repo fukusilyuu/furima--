@@ -10,7 +10,8 @@
     <h2 class="name">
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
-      
+         <%= render "relationships/button", user: @user unless current_user == @user %>
+         <%= render "relationships/count", user: @user %>
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image, class:"item-box-img" %>
@@ -58,7 +59,7 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= link_to @item.user.nickname, user_path(:id) %>(ユーザー名を押してユーザーマイページに移動)</td>
+          <td class="detail-value"><%= link_to @item.user.nickname, user_path(@user.id,:id) %>(ユーザー名を押してユーザーマイページに移動)</td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
@@ -85,7 +86,9 @@
     <div class="option">
       <div class="favorite-btn">
         <%= image_tag "images/star.png" ,class:"favorite-star-icon", id:"star" ,width:"20",height:"20"%>
-        <span id='star-counts'>お気に入り 0</span>
+        <div id="like_<%= dom_id(@item) %>">
+               <%= render "likes/button", likeable: @item %>
+              </div>
       </div>
       <div class="report-btn">
         <%= image_tag "images/flag.png" ,class:"report-flag-icon" ,width:"20",height:"20"%>

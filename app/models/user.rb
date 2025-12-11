@@ -12,31 +12,26 @@ class User < ApplicationRecord
     validates :firstname_katakana, :lastname_katakana, format: { with: /\A[ァ-ヶー－]+\z/ }
   end
 
-  has_many :active_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
-  has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
+  has_many :active_relationships, class_name: 'Relationship', foreign_key: :follower_id
+  has_many :passive_relationships, class_name: 'Relationship', foreign_key: :followed_id
 
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
-  def follow(other_user)
-    following << other_user unless self == other_user
+  def follow(user)
+    following << user unless self == user
   end
 
-  # フォロー解除
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id)&.destroy
+  def unfollow(user)
+    following.destroy(user)
   end
 
-  # フォローしているか確認
-  def following?(other_user)
-    followings.include?(other_user)
+  def following?(user)
+    following.include?(user)
   end
 
-  # フォローされているか確認
   def followed_by?(user)
-    return false if user.nil? # ← これを追加
-
-    passive_relationships.exists?(follower_id: user.id)
+    followers.include?(user)
   end
 
   def liked_by?(user)

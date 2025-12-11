@@ -23,6 +23,8 @@ class UsersController < ApplicationController
 
   def show
     @items = Item.all
+    @user = User.find(params[:id])
+    current_user.follow(@user)
     @users = User.all
   end
 
