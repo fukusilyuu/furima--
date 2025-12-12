@@ -1,9 +1,11 @@
 class AddLikeableToLikes < ActiveRecord::Migration[7.1]
   def change
-    #add_reference :likes, :likeable, polymorphic: true, null: false
-    add_column :likes, :likeable_id, :integer
-    add_column :likes, :likeable_type, :string
+    # add_reference :likes, :likeable, polymorphic: true, null: false
+    add_column :likes, :likeable_id, :bigint unless column_exists?(:likes, :likeable_id)
+    add_column :likes, :likeable_type, :string unless column_exists?(:likes, :likeable_type)
 
-    add_index :likes, [:likeable_type, :likeable_id]
+    return if index_exists?(:likes, %i[likeable_type likeable_id])
+
+    add_index :likes, %i[likeable_type likeable_id], name: 'index_likes_on_likeable'
   end
 end

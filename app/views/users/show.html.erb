@@ -4,11 +4,12 @@
  <div class='page'>
   <div class='user-information'>
    <div class='profile'>
+   <div data-controller="ten">
     <div class="ten-ran-user">
      <div class="mypage-show">
-       <span id='tenran'>:</span>
+       <span data-ten-target="userten" data-action="click->ten#userten">:</span>
      </div>
-     <div class='mypage-lists hidden' id='tenshow'>    
+     <div class='mypage-lists' data-ten-target="usershow" class="hidden" style="display:none;">    
       <div class='mypage-list'> 
        <% if user_signed_in? && @user == current_user %>
         <%=link_to "編集", edit_user_path(@user), class:"mypage-list" %>
@@ -18,40 +19,43 @@
       </div>
      </div>
     </div>
+   </div>
     <%#= image_tag @user.image,width:"105",height:"105",class:'user-icon'%>
     <h1 class='user-h1'><%= "#{@user.nickname}"%></h1>
    </div>
    <div class='follow-follower'>
       <h3>フォロー</h3>
     <%@user.following.each do |user| %>
-      <p class=“f-user”><%= link_to user.nickname, user_path(user.id) %></p>
+      <p class=“f-user”><%= link_to user.nickname, user_path(current_user) %></p>
     <% end %>
       <h3>フォロワー</h3>
     <% @user.followers.each do |user| %>
-      <p class=“f-user”><%= link_to user.nickname, user_path(user.id) %></p>
+      <p class=“f-user”><%= link_to user.nickname, user_path(current_user) %></p>
     <% end %>
       <h3>いいね</h3>
     <% if user_signed_in? && current_user == @user%>
     <% @user.likes.each do |user| %>
-      <p class=“f-user”><%= link_to current_user.nickname, user_path(user.id) %></p>
+      <p class=“f-user”><%= link_to current_user.nickname, user_path(current_user) %></p>
     <%end%>
     <%end%>
   </div>
   <div class='follow'>
-      <turbo-frame id="<%= dom_id(@user, :follow_button) %>">
-  <% if @user&.following?(current_user) %>
-    <%= button_to "フォロー中",
+   <% if user_signed_in? && current_user != @user %>
+    <turbo-frame id="<%= dom_id(@user, :follow_button) %>">
+     <% if @user&.following?(current_user) %>
+      <%= button_to "フォロー中",
       user_relationship_path(@user,:id),
       method: :delete,
       class: "btn btn-secondary" %>
-  <% else %>
-    <%= button_to "フォロー",
+    <% else %>
+      <%= button_to "フォロー",
       user_relationships_path(@user),
       method: :post,
       class: "btn btn-primary" %>
-  <% end %>
-</turbo-frame>
-  <%= render "relationships/count", user: @user %>
+    <% end %>
+   </turbo-frame>
+   <%= render "relationships/count", user: @user %>
+  <%end%>
   </div>
 </div>
 
@@ -74,14 +78,8 @@
       <br>
        <%= item.price %>円<br><%= item.payment.name %>
        <br>
-       <div id="like-btn<%= item.id %>">
-               <% if current_user != item %>
-                <% if user_signed_in? && item.liked_by?(current_user)%>
-                  <%=link_to "❤️", item_like_path(item.id),  data: { turbo_method: :delete }, class: "item-likes" 'delete-likes' %>
-                <% else %>
-                  <%=link_to "♡", item_likes_path(item.id), data: { turbo_method: :post }, class: "item-likes", id:'likes'%>
-                <% end %>
-               <%end%>
+        <div id="like_<%= dom_id(item) %>">
+           <%= render "likes/button", likeable: item %>
         </div>
        </div>
      <%end%>

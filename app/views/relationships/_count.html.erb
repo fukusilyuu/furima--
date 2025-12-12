@@ -1,3 +1,5 @@
+<% return if user.nil? %>
+
 <turbo-frame id="<%= dom_id(user, :follower_count) %>">
   <span class="follower-count">
     フォロワー: <%= user.followers.count %>

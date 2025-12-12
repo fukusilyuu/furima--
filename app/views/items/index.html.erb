@@ -143,11 +143,12 @@
         </div>
         <div class='item-info'>
           <h3 #class='item-name'>
-            <% if item.user == current_user %>
-             <span class='user-point'><%item.name %></span>
-            <%else%>
+            <%# if item.user == current_user %>
+             <span class='user-point'><%@user.nickname %></span>
+            <%#else%>
+            <%@user.nickname %>
               <%= item.name %>
-            <%end%>
+            <%#end%>
           </h3>
 
           <div class='item-price'>

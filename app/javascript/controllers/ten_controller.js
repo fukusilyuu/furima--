@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["on", "show", "tenreply", "showreply"]
+  static targets = ["on", "show", "tenreply", "showreply", "userten", "usershow"]
   
   on() {
     const show = this.showTarget
@@ -28,4 +28,19 @@ export default class extends Controller {
       showreply.classList.add("hidden")
     }
   }
+
+  userten() {
+    const usershow = this.usershowTarget
+
+    // hidden クラスか display:none で判別
+    if (usershow.style.display === "none" || usershow.classList.contains("hidden")) {
+      usershow.style.display = "block"
+      usershow.classList.remove("hidden")
+    } else {
+      usershow.style.display = "none"
+      usershow.classList.add("hidden")
+    }
+  }
+
+  
 }

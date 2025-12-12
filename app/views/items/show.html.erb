@@ -10,8 +10,8 @@
     <h2 class="name">
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
-         <%= render "relationships/button", user: @user unless current_user == @user %>
-         <%= render "relationships/count", user: @user %>
+  <%= render "relationships/button", user: @user unless @user.nil? || current_user == @user %>
+<%= render "relationships/count", user: @user %>
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image, class:"item-box-img" %>
@@ -59,7 +59,7 @@
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= link_to @item.user.nickname, user_path(@user.id,:id) %>(ユーザー名を押してユーザーマイページに移動)</td>
+          <td class="detail-value"><%= link_to @item.user.nickname, user_path(:id) %>(ユーザー名を押してユーザーマイページに移動)</td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
@@ -85,7 +85,6 @@
     </table>
     <div class="option">
       <div class="favorite-btn">
-        <%= image_tag "images/star.png" ,class:"favorite-star-icon", id:"star" ,width:"20",height:"20"%>
         <div id="like_<%= dom_id(@item) %>">
                <%= render "likes/button", likeable: @item %>
               </div>
@@ -112,24 +111,27 @@
         <%= image_tag "images/comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>   
           <span>コメントする<span>
       </button>
+    <div data-controller="clickviews">
       <button class="comment-btn2" data-clickviews-target="toggle"
           data-action="click->clickviews#toggle">
            <span id="comment-ran">コメント欄</span>
       </button>
       <%end%>
      <%end%>
+
       <ul class="comments" id="comments" data-clickviews-target="body" class="hidden" style="display:none;">
        <%@item.comments.each do |comment| %>
         <li class="comment-lists">
           <li class="comment-list">
            <%= comment.user.nickname %>
            <%= l comment.created_at, class:"comment-created-at"%>
+           <div data-controller="ten">
+
            <div class="ten-ran">
             <div class="comment-show">
-              <span data-ten-target="on"
-          data-action="click->ten#on">d</span>
+              <span data-ten-target="on" data-action="click->ten#on">:</span>
             </div>
-             <ul class="show-lists" >
+             <ul class="show-lists" data-ten-target="show" class="hidden" style="display:none;">
               <li class='show-list'>
                <% if user_signed_in? && comment.user == current_user %>
                 <%=link_to "編集", edit_item_comment_path(@item,comment), data: { turbo_frame: "modal" }, class:"show-list" %>
@@ -139,9 +141,11 @@
                </li>
               </ul>
            </div>
+          </div>
            <br>
            <li class='comment-text2'><%= comment.text %></li>
-           <div class="reply" data-clickviews-target="reply" class="hidden" style="display:none;">
+           <div data-controller="ten">
+           <div class="reply hidden" data-clickviews-target="reply" style="display:none;">
              <div class='reply-context'>
            <%=form_with model: Reply.new, url: item_comment_replies_path(@item, comment), local: true do |f|%>
            <%#= render 'shared/error_messages', model: f.object wh%>
@@ -155,6 +159,7 @@
              <div class='ro'>
               <%=reply.user.nickname%> =>
              <div class='reply-context'><%=reply.context %></div>  
+            <div data-controller="ten">
              <div class="ten-ran">
             <div class="comment-show">
               <span data-ten-target="tenreply"
@@ -169,6 +174,7 @@
                <%end%>
                </li>
              </ul>
+            </div>
            </div>
             </div>
              <br>
@@ -187,7 +193,7 @@
        </div>
            <br>
              <li class="comment-images">
-         <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20",data: { clickviews_target: "change", action: "click->clickviews#change" } %>
+         <%=image_tag "images/comment.png",class:"comment-image",width:"15",height:"20" ,data: { clickviews_target: "change", action: "click->clickviews#change" } %>
          <div id="like_<%= dom_id(comment) %>">
                <%= render "likes/button", likeable: comment %>
               </div>
@@ -199,6 +205,8 @@
      </li>
       </li>  
       </ul>  
+      </div>
+
   </div>
   <div class="links">
     <a href="#" class="change-item-btn">
@@ -212,3 +220,4 @@
 </div>
 <%= render "shared/footer" %>
 
+</div>
