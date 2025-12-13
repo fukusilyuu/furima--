@@ -3,5 +3,6 @@
 <% end %>
 
 <%= turbo_stream.replace dom_id(@user, :follower_count) do %>
-  <%= render "relationships/count", user: @user %>
+  <%#= render "relationships/count", user: @user %>
+  <%= render partial: "relationships/follow_counts", locals: { user: @user } %>
 <% end %>

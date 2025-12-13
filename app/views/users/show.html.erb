@@ -24,21 +24,27 @@
     <h1 class='user-h1'><%= "#{@user.nickname}"%></h1>
    </div>
    <div class='follow-follower'>
-      <h3>フォロー</h3>
-    <%@user.following.each do |user| %>
-      <p class=“f-user”><%= link_to user.nickname, user_path(current_user) %></p>
-    <% end %>
-      <h3>フォロワー</h3>
-    <% @user.followers.each do |user| %>
-      <p class=“f-user”><%= link_to user.nickname, user_path(current_user) %></p>
-    <% end %>
-      <h3>いいね</h3>
-    <% if user_signed_in? && current_user == @user%>
-    <% @user.likes.each do |user| %>
-      <p class=“f-user”><%= link_to current_user.nickname, user_path(current_user) %></p>
-    <%end%>
-    <%end%>
-  </div>
+
+    <%= link_to "フォロー", following_user_path(@user), class: "follow-link" %>
+    <turbo-frame id="follow_counts_<%= @user.id %>">
+     <div class="follow-counts">
+       <%= @user.following.count %>
+     </div>
+    </turbo-frame>
+    <%= link_to "フォロワー", followers_user_path(@user), class: "follow-link1" %>
+    <turbo-frame id="follow_counts_<%= @user.id %>">
+      <div class="follow-counts">
+       <%= @user.followers.count %>
+     </div>
+    </turbo-frame>
+
+    <h3>いいね</h3>
+     <% if user_signed_in? && current_user == @user%>
+       <% @user.likes.each do |user| %>
+        <p class=“f-user”><%= link_to current_user.nickname, user_path(current_user) %></p>
+       <%end%>
+     <%end%>
+    </div>
   <div class='follow'>
    <% if user_signed_in? && current_user != @user %>
     <turbo-frame id="<%= dom_id(@user, :follow_button) %>">
@@ -54,7 +60,6 @@
       class: "btn btn-primary" %>
     <% end %>
    </turbo-frame>
-   <%= render "relationships/count", user: @user %>
   <%end%>
   </div>
 </div>

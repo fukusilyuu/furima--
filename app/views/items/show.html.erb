@@ -11,7 +11,7 @@
        <%= @item.name %>
        <%= l @item.created_at, class:"comment-created-at"%>
   <%= render "relationships/button", user: @user unless @user.nil? || current_user == @user %>
-<%= render "relationships/count", user: @user %>
+<%= render "relationships/followers", user: @user %>
     </h2>
     <div class='item-img-content'>
       <%= image_tag @item.image, class:"item-box-img" %>

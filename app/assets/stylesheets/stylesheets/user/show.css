@@ -57,6 +57,14 @@
 }
 
 
+.follow-link{
+  margin-right: px;
+}
+
+.follow-link1{
+  margin-right: 1px;
+}
+
 .user-relationship{
   display: flex;
   justify-content: center;

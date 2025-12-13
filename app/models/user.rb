@@ -34,6 +34,10 @@ class User < ApplicationRecord
     followers.include?(user)
   end
 
+  def following_count
+    following.count
+  end
+
   def liked_by?(user)
     likes.where(user_id: user.id).exists?
   end

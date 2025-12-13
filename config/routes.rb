@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   # get 'items/search_names', to: 'items#search_names'
 
   resources :users do
+    member do
+      get :following
+      get :followers
+    end
     resources :relationships, only: %i[create destroy]
   end
 
