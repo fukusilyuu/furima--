@@ -4,6 +4,11 @@
 <div data-controller="clickviews">
 
 <header class='top-page-header'>
+<% if user_signed_in? %>
+  <%= link_to notifications_path do %>
+    <span class='size-border'>ー</span>🔔 通知 (<%= @notifications.count %>)
+  <% end %>
+<% end %>
 
   <div class='search-bar-contents'>
     <%= link_to image_tag("images/furima-logo-color.png", class:"furima-icon"), "/" %>

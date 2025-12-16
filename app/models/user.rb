@@ -18,6 +18,32 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
+  has_many :active_notifications,
+           class_name: 'Notification',
+           foreign_key: 'visitor_id',
+           dependent: :destroy
+
+  has_many :passive_notifications,
+           class_name: 'Notification',
+           foreign_key: 'visited_id',
+           dependent: :destroy
+
+  # フォロー通知
+  def create_follow_notification!(current_user)
+    active_notifications.create!(
+      visited_id: id,
+      action: 'follow'
+    )
+  end
+
+  # 相互フォロー通知
+  def create_mutual_notification!(current_user)
+    active_notifications.create!(
+      visited_id: id,
+      action: 'mutual'
+    )
+  end
+
   def follow(user)
     following << user unless self == user
   end
@@ -36,6 +62,12 @@ class User < ApplicationRecord
 
   def following_count
     following.count
+  end
+
+  def mutual_follow?(other_user)
+    return false if other_user.nil?
+
+    following?(other_user) && other_user.following?(self)
   end
 
   def liked_by?(user)

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/items/:item_id/orders/:order_id/exchanges' => 'exchanges#create'
 
   # get 'items/search_names', to: 'items#search_names'
+  resources :notifications, only: %i[index destroy]
 
   resources :users do
     member do

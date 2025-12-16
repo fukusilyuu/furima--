@@ -1,0 +1,30 @@
+.notifications {
+  width: 71%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.notification-h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.notification-border{
+  width: 230px;
+  display: block;
+  text-align: center;
+  margin: 10px auto;
+  border-bottom: 2px solid #3CCACE;
+  color: #c0c0c0;
+}
+
+.notification{  
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+}
+
+.notification-content{
+
+}
