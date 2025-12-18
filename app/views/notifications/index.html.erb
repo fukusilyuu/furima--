@@ -3,25 +3,27 @@
 <div class="notifications">
  <% if @notifications.empty? %>
   <h2 class="notification-h2">通知はありません</h2>
+  <span class="notification-border"></span>
  <% else %>
    <h2 class="notification-h2">通知欄 : <span class="notification-count">全 <%= @notifications.count %> 件</span></h2>
    <span class="notification-border"></span>
  <% end %>
 
- <% @notifications.each do |notification| %>
-  <div class="notification">
-    <% if notification.action == "follow" %>
-     <div class="notification-content">
-      <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
-      さんにフォローされました <span class="notification-delete">:</span>
-     </div>
-    <% elsif notification.action == "mutual" %>
-     <div class="notification-content">
-      <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
-      さんと相互フォローになりました 🎉 <span class="notification-ten">:</span>
-     </div>
-    <% end %>
-  </div>
- <% end %>
+<% if @notifications.any? %>
+  <%= link_to "全削除",
+    destroy_all_notifications_path,
+    data: { turbo_method: :delete, turbo_confirm: "すべての通知を削除しますか？" },
+    class: "notification-all-delete" %>
+<% end %>
+
+<div id="notifications">
+  <% @notifications.each do |notification| %>
+    <%= render notification %> 
+  <% end %>
+</div>
+
+
+
+
 </div>
 <%= render "shared/footer" %>

@@ -104,6 +104,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_13_223551) do
     t.integer "visitor_id"
     t.integer "visited_id"
     t.string "action"
+    t.boolean "checked", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

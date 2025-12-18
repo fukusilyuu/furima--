@@ -29,17 +29,17 @@ class User < ApplicationRecord
            dependent: :destroy
 
   # フォロー通知
-  def create_follow_notification!(current_user)
+  def create_follow_notification!(user)
     active_notifications.create!(
-      visited_id: id,
+      visited_id: user.id,
       action: 'follow'
     )
   end
 
   # 相互フォロー通知
-  def create_mutual_notification!(current_user)
+  def create_mutual_notification!(user)
     active_notifications.create!(
-      visited_id: id,
+      visited_id: user.id,
       action: 'mutual'
     )
   end

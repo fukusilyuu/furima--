@@ -10,13 +10,13 @@ class RelationshipsController < ApplicationController
 
     # 相互フォローになったら通知
     if @user.following?(current_user)
-      current_user.create_mutual_notification!(@user)
       @user.create_mutual_notification!(current_user)
+      current_user.create_mutual_notification!(@user)
     end
 
     respond_to do |format|
       format.turbo_stream
-      format.html { redirect_back fallback_location: root_path }
+      format.html { redirect_to @user }
     end
   end
 

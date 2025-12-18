@@ -1,3 +1,29 @@
-<%= turbo_stream.prepend "notifications",
-    partial: "notifications/notification",
-    locals: { notification: @user.passive_notifications.last } %>
+<turbo-frame id="<%= dom_id(notification) %>">
+ <div class="notification">
+    <% case notification.action %>
+      <% when "follow" %>
+     <div class="notification-content">
+      <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
+       さんにフォローされました
+     </div>
+
+      <% when "mutual_follow" %>
+     <div class="notification-content">
+      <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
+      さんと相互フォローになりました 🎉
+     </div>
+    <% end %>
+
+    <div class="notification-time">
+      <%= l notification.created_at %> 
+    </div>
+
+    <div class="notification-item">
+    <%= button_to "×",
+      notification_path(notification),
+      method: :delete,
+      class: "notification-delete",
+      data: { turbo_confirm: "削除しますか？" } %>
+      </div>
+  </div>
+</turbo-frame>
