@@ -101,12 +101,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_13_223551) do
   end
 
   create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "visitor_id"
-    t.integer "visited_id"
-    t.string "action"
-    t.boolean "checked", default: false, null: false
+    t.bigint "visitor_id", null: false
+    t.bigint "visited_id", null: false
+    t.string "notifiable_type", null: false
+    t.bigint "notifiable_id", null: false
+    t.string "action", null: false
+    t.boolean "checked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["visited_id"], name: "index_notifications_on_visited_id"
+    t.index ["visitor_id"], name: "index_notifications_on_visitor_id"
   end
 
   create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -173,6 +178,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_13_223551) do
   add_foreign_key "exchanges", "users"
   add_foreign_key "items", "users"
   add_foreign_key "likes", "users"
+  add_foreign_key "notifications", "users", column: "visited_id"
+  add_foreign_key "notifications", "users", column: "visitor_id"
   add_foreign_key "orders", "items"
   add_foreign_key "orders", "users"
   add_foreign_key "relationships", "users", column: "followed_id"

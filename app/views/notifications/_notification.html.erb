@@ -1,18 +1,45 @@
 <turbo-frame id="<%= dom_id(notification) %>">
  <div class="notification">
+
     <% case notification.action %>
       <% when "follow" %>
+      
      <div class="notification-content">
+       <% user = notification.notifiable %>
+        <%= link_to user_path(user), class: "notification-link" do %>
+          <%= image_tag user.image, width:"40", class: "notification-user-img", fallback: "default_user.png" %>
       <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
        さんにフォローされました
      </div>
+        <% end %>
 
-      <% when "mutual_follow" %>
+      <% when "mutual" %>
      <div class="notification-content">
-      <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
+       <% user = notification.notifiable %>
+        <%= link_to user_path(user) do %>
+        <%= image_tag user.image, width:"40", height:"20", class: "notification-user-img", fallback: "default_user.png" %>
+       <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
       さんと相互フォローになりました 🎉
      </div>
-    <% end %>
+     <%end%>
+
+      <% when 'like' %>  
+     <div class="notification-content">
+       <% if notification.action == "like" %>
+        <% item = notification.notifiable %>
+        <%= link_to item_path(item), class: "notification-link" do %>
+          <%= image_tag item.image, width:"40", class: "notification-item-img" %>
+        <% end %>
+        <div class="notification-margin-left">
+      <%= link_to notification.visitor.nickname, user_path(notification.visitor) %>
+       があなたの商品
+      <%= link_to notification.notifiable.name, item_path(notification.notifiable) %>
+       にいいねしました
+       </div>
+     </div>
+       <% end %>
+      <% end %>
+
 
     <div class="notification-time">
       <%= l notification.created_at %> 
@@ -25,5 +52,6 @@
       class: "notification-delete",
       data: { turbo_confirm: "削除しますか？" } %>
       </div>
+      <%#end%>
   </div>
 </turbo-frame>

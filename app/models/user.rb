@@ -39,8 +39,26 @@ class User < ApplicationRecord
   # 相互フォロー通知
   def create_mutual_notification!(user)
     active_notifications.create!(
-      visited_id: user.id,
+      visitor: self,
+      visited: user,
+      notifiable: self,
       action: 'mutual'
+    )
+  end
+
+  def create_like_notification!(current_user, item)
+    active_notifications.create!(
+      visited_id: item.user_id,
+      notifiable: item,
+      action: 'like'
+    )
+  end
+
+  def create_follow_notification!(current_user)
+    notifications.create!(
+      visitor: current_user,
+      visited: self,
+      action: 'follow'
     )
   end
 
@@ -80,5 +98,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :orders
   has_many :exchanges
+  has_many :notifications, as: :notifiable, dependent: :destroy
+
   has_one_attached :image, dependent: :destroy
 end

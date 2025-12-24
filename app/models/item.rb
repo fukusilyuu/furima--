@@ -23,11 +23,20 @@ class Item < ApplicationRecord
   has_one :order
   has_many :exchanges
   has_many :likes, as: :likeable, dependent: :destroy
+  has_many :notifications, as: :notifiable, dependent: :destroy
 
   has_one_attached :image, dependent: :destroy
 
   def liked_by?(user)
     likes.where(user_id: user.id).exists?
+  end
+
+  def create_like_notification!(current_user)
+    notifications.create!(
+      visitor: current_user,
+      visited: user,
+      action: 'like'
+    )
   end
 
   # Ransack検索で許可するカラム一覧
