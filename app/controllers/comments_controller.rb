@@ -8,8 +8,10 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @reply = Reply.new
+    @item = Item.find(params[:item_id])
+    @comment = @item.comments.build(comment_params.merge(user: current_user))
 
+    @reply = Reply.new
     @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
