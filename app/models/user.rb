@@ -62,6 +62,15 @@ class User < ApplicationRecord
     )
   end
 
+  def create_reply_notification!(current_user, reply)
+    active_notifications.create!(
+      visitor: self,
+      visited: reply.comment.user,
+      notifiable: reply,
+      action: 'reply'
+    )
+  end
+
   def create_follow_notification!(current_user)
     notifications.create!(
       visitor: current_user,
