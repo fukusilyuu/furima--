@@ -5,6 +5,21 @@
 
 <header class='top-page-header'>
 
+<% if user_signed_in? %>
+  <% has_unread = current_user.passive_notifications.unchecked.exists? %>
+
+  <%= link_to notifications_path do %>
+    <span
+      class="notification-bell <%= 'has-unread' if has_unread %>">
+        <span class='size-border'>ー</span>🔔
+      <% if has_unread %>
+        <span class="notification-dot"></span>
+      <% end %>
+    </span>
+  <% end %>
+<% end %> 
+
+
   <div class='search-bar-contents'>
     <%= link_to image_tag("images/furima-logo-color.png", class:"furima-icon"), "/" %>
 <%= search_form_for @q, url: search_names_items_path, method: :get, html: {
@@ -46,7 +61,7 @@
     </ul>
     <ul class='lists-right'>
      <% if user_signed_in? %>
-      <li><%#=image_tag current_user.image,width:"45",height:"45"%></li>
+      <li><%=image_tag current_user.image,width:"45",height:"45"%></li>
       <li><%= link_to current_user.nickname, user_path(current_user), class: "user-nickname"%> </li>
       <li><%= link_to 'ログアウト', destroy_user_session_path, data: {turbo_method: :delete}, class: "logout" %></li>
      <%else%>

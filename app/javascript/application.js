@@ -13,7 +13,6 @@ import HelloController from "./controllers/hello_controller.js"
 import PriceController from "./controllers/price_controller.js"
 import SearchController from "./controllers/search_controller.js"
 import TenController from "./controllers/ten_controller.js"
-//import LikeController from "./controllers/like_controller.js"
 //import CardController from "./controllers/card_controller.js"
 // ...必要な分だけ import
 
@@ -22,5 +21,4 @@ application.register("hello", HelloController)
 application.register("price", PriceController)
 application.register("search", SearchController)
 application.register("ten", TenController)
-//application.register("like", LikeController)
 //application.register("card", CardController)

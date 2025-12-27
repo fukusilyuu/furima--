@@ -1,0 +1,88 @@
+<turbo-frame id="<%= dom_id(notification) %>">
+ <div class="notification">
+
+    <% case notification.action %>
+      <% when "follow" %>
+      
+     <div class="notification-content">
+       <% user = notification.notifiable %>
+        <%= link_to user_path(user), class: "notification-link" do %>
+          <%= image_tag user.image, width:"40", class: "notification-user-img", fallback: "default_user.png" %>
+      <%= link_to notification.visitor.nickname, user_path(notification.visitor), data: { turbo: false } %>
+       さんにフォローされました
+     </div>
+        <% end %>
+
+      <% when "mutual" %>
+     <div class="notification-content">
+       <% user = notification.notifiable %>
+        <%= link_to user_path(user) do %>
+        <%= image_tag user.image, width:"40", height:"20", class: "notification-user-img", fallback: "default_user.png" %>
+       <%= link_to notification.visitor.nickname, user_path(notification.visitor), data: { turbo: false } %>
+      さんと相互フォローになりました 🎉
+     </div>
+     <%end%>
+
+      <% when 'like' %>  
+     <div class="notification-content">
+       <% if notification.action == "like" %>
+        <% item = notification.notifiable %>
+        <%= link_to item_path(item), class: "notification-link" do %>
+          <%= image_tag item.image, width:"40", class: "notification-item-img" %>
+        <% end %>
+        <div class="notification-margin-left">
+      <%= link_to notification.visitor.nickname, user_path(notification.visitor), data: { turbo: false } %>
+       があなたの商品
+      <%= link_to notification.notifiable.name, item_path(notification.notifiable), data: { turbo: false } %>
+       にいいねしました
+       </div>
+     </div>
+       <% end %>
+
+       <% when "comment" %>
+      <div class="notification-content">
+         <% comment = notification.notifiable %>
+  <% user = notification.visitor %>
+  <% item = comment.item %>
+        <%= link_to item_path(item), class: "notification-link" do %>
+          <%= image_tag user.image, width:"40", class: "notification-item-img" %>
+        <% end %>
+        <div class="notification-margin-left">
+          <%= link_to notification.visitor.nickname, user_path(notification.visitor), data: { turbo: false } %>
+      さんがあなたの商品
+      <%= link_to item.name, item_path(notification.notifiable), data: { turbo: false } %>
+       にコメントしました
+        </div>
+      </div>
+      
+      <% when "reply" %>
+      <div class="notification-content">
+          <% comment = notification.notifiable %>
+
+  <% user = notification.visitor %>
+  <% item = comment.item %>
+        
+        <%= link_to item_path(item), class: "notification-link" do %>
+          <%= image_tag user.image, width:"40", class: "notification-item-img" %>
+        <% end %>
+        <div class="notification-margin-left">
+          <%= link_to notification.visitor.nickname, user_path(notification.visitor), data: { turbo: false } %>
+      さんがあなたのコメントに返信しました
+      <%= link_to item.name, item_path(notification.notifiable), data: { turbo: false } %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="notification-time">
+      <%= l notification.created_at %> 
+    </div>
+
+    <div class="notification-item">
+    <%= button_to "×",
+      notification_path(notification),
+      method: :delete,
+      class: "notification-delete",
+      data: { turbo_confirm: "削除しますか？" } %>
+      </div>
+  </div>
+</turbo-frame>

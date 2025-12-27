@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_11_01_144446) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_13_223551) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -92,15 +92,26 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_01_144446) do
 
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "item_id"
-    t.bigint "comment_id"
-    t.bigint "reply_id"
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_likes_on_comment_id"
-    t.index ["item_id"], name: "index_likes_on_item_id"
-    t.index ["reply_id"], name: "index_likes_on_reply_id"
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "visitor_id", null: false
+    t.bigint "visited_id", null: false
+    t.string "notifiable_type", null: false
+    t.bigint "notifiable_id", null: false
+    t.string "action", null: false
+    t.boolean "checked", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["visited_id"], name: "index_notifications_on_visited_id"
+    t.index ["visitor_id"], name: "index_notifications_on_visitor_id"
   end
 
   create_table "orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -139,12 +150,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_01_144446) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "shippings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.text "message", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "nickname", default: "", null: false
     t.string "email", default: "", null: false
@@ -172,10 +177,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_11_01_144446) do
   add_foreign_key "exchanges", "orders"
   add_foreign_key "exchanges", "users"
   add_foreign_key "items", "users"
-  add_foreign_key "likes", "comments"
-  add_foreign_key "likes", "items"
-  add_foreign_key "likes", "replies"
   add_foreign_key "likes", "users"
+  add_foreign_key "notifications", "users", column: "visited_id"
+  add_foreign_key "notifications", "users", column: "visitor_id"
   add_foreign_key "orders", "items"
   add_foreign_key "orders", "users"
   add_foreign_key "relationships", "users", column: "followed_id"

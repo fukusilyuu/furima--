@@ -1,13 +1,41 @@
 class LikesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_item_like
+  before_action :set_likeable
+
   def create
-    like = current_user.likes.build(item_id: params[:item_id])
-    like.save
-    redirect_to root_path
+    current_user.likes.create!(likeable: @item)
+
+    current_user.create_like_notification!(current_user, @item) if @item.user_id != current_user.id
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to item_path(@item) }
+    end
   end
 
   def destroy
-    like = Like.find_by(item_id: params[:item_id], user_id: current_user.id)
-    like.destroy
-    redirect_to root_path
+    current_user.likes.find_by(likeable: @item)&.destroy
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to item_path(@item) }
+    end
+  end
+
+  private
+
+  def set_item_like
+    @item = Item.find(params[:item_id])
+  end
+
+  def set_likeable
+    @likeable = if params[:reply_id]
+                  Reply.find(params[:reply_id])
+                elsif params[:comment_id]
+                  Comment.find(params[:comment_id])
+                else
+                  Item.find(params[:item_id])
+                end
   end
 end

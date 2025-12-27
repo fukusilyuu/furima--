@@ -1,0 +1,6 @@
+<%= link_to notifications_path, data: { turbo: false }, class: "bell" do %>
+  🔔
+  <% if current_user.notifications.unread.exists? %>
+    <span class="bell-dot"></span>
+  <% end %>
+<% end %>

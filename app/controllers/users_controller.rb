@@ -23,6 +23,8 @@ class UsersController < ApplicationController
 
   def show
     @items = Item.all
+    @user = User.find(params[:id])
+    current_user.follow(@user)
     @users = User.all
   end
 
@@ -44,6 +46,16 @@ class UsersController < ApplicationController
     return unless @user.destroy
 
     redirect_to root_path
+  end
+
+  def following
+    @user = User.find(params[:id])
+    @following_users = @user.following
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followers
   end
 
   private

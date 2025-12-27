@@ -12,31 +12,97 @@ class User < ApplicationRecord
     validates :firstname_katakana, :lastname_katakana, format: { with: /\A[ァ-ヶー－]+\z/ }
   end
 
-  has_many :active_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
-  has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
+  has_many :active_relationships, class_name: 'Relationship', foreign_key: :follower_id
+  has_many :passive_relationships, class_name: 'Relationship', foreign_key: :followed_id
 
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
-  def follow(other_user)
-    following << other_user unless self == other_user
+  has_many :active_notifications,
+           class_name: 'Notification',
+           foreign_key: 'visitor_id',
+           dependent: :destroy
+
+  has_many :passive_notifications,
+           class_name: 'Notification',
+           foreign_key: 'visited_id',
+           dependent: :destroy
+
+  # フォロー通知
+  def create_follow_notification!(user)
+    active_notifications.create!(
+      visited_id: user.id,
+      action: 'follow'
+    )
   end
 
-  # フォロー解除
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id)&.destroy
+  # 相互フォロー通知
+  def create_mutual_notification!(user)
+    active_notifications.create!(
+      visitor: self,
+      visited: user,
+      notifiable: self,
+      action: 'mutual'
+    )
   end
 
-  # フォローしているか確認
-  def following?(other_user)
-    followings.include?(other_user)
+  def create_like_notification!(current_user, item)
+    active_notifications.create!(
+      visited_id: item.user_id,
+      notifiable: item,
+      action: 'like'
+    )
   end
 
-  # フォローされているか確認
+  def create_comment_notification!(current_user, comment)
+    active_notifications.create!(
+      visited_id: comment.item.user,
+      notifiable: comment,
+      action: 'comment'
+    )
+  end
+
+  def create_reply_notification!(current_user, reply)
+    active_notifications.create!(
+      visitor: self,
+      visited: reply.comment.user,
+      notifiable: reply,
+      action: 'reply'
+    )
+  end
+
+  def create_follow_notification!(current_user)
+    notifications.create!(
+      visitor: current_user,
+      visited: self,
+      action: 'follow'
+    )
+  end
+
+  def follow(user)
+    following << user unless self == user
+  end
+
+  def unfollow(user)
+    following.destroy(user)
+  end
+
+  def following?(user)
+    following.include?(user)
+  end
+
   def followed_by?(user)
-    return false if user.nil? # ← これを追加
+    followers.include?(user)
+  end
 
-    passive_relationships.exists?(follower_id: user.id)
+  def following_count
+    following.count
+  end
+
+  def mutual_follow?(other_user)
+    return false if other_user.nil?
+
+    following?(other_user) && other_user.following?(self)
   end
 
   def liked_by?(user)
@@ -49,5 +115,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :orders
   has_many :exchanges
+  has_many :notifications, as: :notifiable, dependent: :destroy
+
   has_one_attached :image, dependent: :destroy
 end

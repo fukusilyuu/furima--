@@ -1,0 +1,14 @@
+<% return if user.nil? %>
+<turbo-frame id="<%= dom_id(user, :follow_button) %>">
+  <% if current_user&.following?(user) %>
+    <%= button_to "フォロー中",
+      user_relationship_path(@user,:id),
+      method: :delete,
+      class: "btn btn-secondary" %>
+  <% else %>
+    <%= button_to "フォロー",
+      user_relationships_path(@user),
+      method: :post,
+      class: "btn btn-primary" %>
+  <% end %>
+</turbo-frame>

@@ -1,0 +1,27 @@
+<%= render "shared/header" %>
+
+<div class="notifications">
+ <% if @notifications.empty? %>
+  <h2 class="notification-h2">通知はありません</h2>
+  <span class="notification-border"></span>
+ <% else %>
+   <h2 class="notification-h2">通知欄 : <span class="notification-count">全 <%= @notifications.count %> 件</span></h2>
+   <span class="notification-border"></span>
+ <% end %>
+
+<% if @notifications.any? %>
+  <%= link_to "全削除",
+    destroy_all_notifications_path,
+    data: { turbo_method: :delete, turbo_confirm: "すべての通知を削除しますか？" },
+    class: "notification-all-delete" %>
+<% end %>
+
+<div id="notifications">
+ <% @notifications.each do |notification| %>
+    <%= render notification %> 
+ <% end %>
+</div>
+
+
+</div>
+<%= render "shared/footer" %>

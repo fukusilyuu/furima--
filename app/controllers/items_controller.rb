@@ -1,9 +1,10 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, expect: %i[index show]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: %i[show edit update destroy]
   before_action :set_edit_destroy, only: %i[edit destroy]
   def index
     @items = Item.includes(:user).order('created_at DESC')
+    @user = User.new
     @users = User.all
     @q = Item.ransack(params[:q])
     @items = @q.result.limit(5)
@@ -58,18 +59,6 @@ class ItemsController < ApplicationController
     @names = Item.where('name LIKE ?', "%#{keyword}%").limit(10).pluck(:name)
 
     render json: @names
-  end
-
-  def search_names
-    keyword = params[:keyword].to_s.strip
-
-    @items = if keyword.present?
-               Item.where('name LIKE ?', "%#{keyword}%")
-             else
-               Item.none
-             end
-
-    render partial: 'items/search_results', locals: { items: @items }
   end
 
   private

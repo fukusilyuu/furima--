@@ -23,6 +23,8 @@
       <label class="form-text">パスワード</label>
       <span class="indispensable">必須</span>
     </div>
+          <li><%= link_to '新規登録', new_user_registration_path, class: "sign-up" %></li>
+
     <%= f.password_field :password, length: { maximum: 6 }, class:"input-default", id:"password", placeholder:"" %>
   </div>
   <div class='login-btn'>

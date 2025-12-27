@@ -5,9 +5,11 @@ class RepliesController < ApplicationController
   before_action :authenticate_user!, only: %i[edit update destroy]
 
   def create
-    @user = current_user
+    # @comment = Item.find(params[:comment_id])
     @comment = @item.comments.find(params[:comment_id])
-    @reply = @comment.replies.new(reply_params)
+    @reply = @comment.replies.build(reply_params.merge(user: current_user))
+
+    # @reply = @comment.replies.new(reply_params)
     @reply.user == current_user
     if @reply.save
       redirect_to item_path(@item), notice: '返信を投稿しました'
@@ -39,9 +41,11 @@ class RepliesController < ApplicationController
       @reply.destroy
       redirect_to @item, notice: 'コメントを削除しました'
     else
-      render 'items/show', status: :unprocessable_entity
-
+      redirect_to @item, alert: '他のユーザーのコメントは削除できません'
     end
+    return if @item.comments.nil?
+
+    redirect_to item_path
   end
 
   private

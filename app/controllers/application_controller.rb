@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   before_action :set_search
 
+  before_action :set_notifications, if: :user_signed_in?
+
+  def set_notifications
+    @notifications = current_user.passive_notifications
+                                 .order(created_at: :desc)
+                                 .limit(5)
+  end
+
   protected
 
   def configure_permitted_parameters
